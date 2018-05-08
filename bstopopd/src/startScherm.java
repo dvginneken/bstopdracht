@@ -46,7 +46,6 @@ public class startScherm extends Application {
         mainbox.getChildren().addAll(vierkant, buttons);
         buttons.getChildren().addAll(Startspel, genereer, quit);
 
-        Startspel.bind()
         mainPane.setTop(titlebox);
         mainPane.setCenter(mainbox);
 
