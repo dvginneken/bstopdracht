@@ -1,4 +1,4 @@
-package bstopdracht;
+package com.company;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -14,8 +14,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class startScherm extends Application {
+    Button Startspel = new Button("Start quiz");
+    Button genereer = new Button("Naar optiescherm");
+    Button quit = new Button("Afsluiten");
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         launch(args);
     }
 
@@ -40,9 +43,6 @@ public class startScherm extends Application {
         HBox buttons = new HBox();
         buttons.setAlignment(Pos.CENTER);
         buttons.setSpacing(10);
-        Button Startspel = new Button("Start quiz");
-        Button genereer = new Button("genereer quizzes");
-        Button quit = new Button("Afsluiten");
         mainbox.getChildren().addAll(vierkant, buttons);
         buttons.getChildren().addAll(Startspel, genereer, quit);
 
