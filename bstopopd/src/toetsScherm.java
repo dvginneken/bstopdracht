@@ -1,11 +1,14 @@
 package src;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -15,6 +18,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class toetsScherm extends Application {
 
@@ -42,16 +47,42 @@ public class toetsScherm extends Application {
             if (option.equals("50")){
                 rb.setSelected(true);
             }
-        }
+        };
         final FileChooser fileChooser = new FileChooser();
         Button inputfile = new Button("selecteer bestand");
         Text filename = new Text();
         left.getChildren().addAll(inputfile, filename);
+
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
+
+                RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
+                System.out.println("Selected Radio Button - "+chk.getText());
+
+            }
+        });
+
         inputfile.setOnAction((ActionEvent event) -> {
+
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
                 filename.setText("Geselecteerd: "+file.getName());
+
             }
+            try{
+                Scanner scanner = new Scanner(file);
+                while (scanner.hasNext()){
+                    System.out.println(scanner.nextLine());
+                }
+            }
+            catch (FileNotFoundException e){
+                System.out.println(e);
+            }
+            catch (NullPointerException e){
+                System.out.println(e);
+            }
+
         });
 
         mainPane.getChildren().addAll(titel,contentholder);
