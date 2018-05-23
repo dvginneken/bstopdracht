@@ -53,7 +53,7 @@ public class toetsScherm extends Application {
         Text filename = new Text();
         left.getChildren().addAll(inputfile, filename);
 
-        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        /*group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
 
@@ -61,7 +61,7 @@ public class toetsScherm extends Application {
                 System.out.println("Selected Radio Button - "+chk.getText());
 
             }
-        });
+        });*/
 
         inputfile.setOnAction((ActionEvent event) -> {
 
