@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class startScherm extends Application {
-    Button Startspel = new Button("Start quiz");
+    Button Startspel = new Button("Naar toetsscherm");
     Button genereer = new Button("Naar optiescherm");
     Button quit = new Button("Afsluiten");
 
@@ -58,3 +58,4 @@ public class startScherm extends Application {
     }
 
 }
+

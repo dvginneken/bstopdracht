@@ -1,5 +1,6 @@
 package src;
 
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,9 +10,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Optiescherm extends Application {
-    Button beginscherm = new Button("Naar beginscherm");
+    Button naar_beginscherm = new Button("Naar beginscherm");
     Button afsluiten = new Button("Afsluiten");
-    Button speelscherm = new Button("Naar speelscherm");
+    Button naar_speelscherm = new Button("Naar speelscherm");
+    Instellingen inst = new Instellingen();
+    Speelscherm speelscherm = new Speelscherm();
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -20,10 +24,11 @@ public class Optiescherm extends Application {
         primaryStage.setTitle("Optiescherm");
 
         //naam
-        Label naam = new Label("Naam: ");
-        TextField tekst = new TextField();
+        final TextField tekst = new TextField();
+        final Label label_event = new Label();
+        tekst.setPromptText("Geef je naam: ");
         HBox hboxnaam = new HBox(10);
-        hboxnaam.getChildren().addAll(naam, tekst);
+        hboxnaam.getChildren().addAll(tekst, label_event);
 
         //hoeveelheid vragen
         Label hoeveellabel = new Label("Hoeveel vragen: ");
@@ -39,6 +44,8 @@ public class Optiescherm extends Application {
                 rb.setSelected(true);
             }
         }
+
+
 
         //soorten
         String[] opties = {"Volledige naam","1-lettercode","3-lettercode","Hydrofobiciteit","Lading","Grootte","3D-voorkeur","Structuur"};
@@ -92,13 +99,25 @@ public class Optiescherm extends Application {
         vboxtijd.getChildren().addAll(tijdlabel, ja, nee, vboxseconden);
 
         //knoppen
-        HBox hboxknoppen = new HBox(this.beginscherm, this.afsluiten, this.speelscherm);
+
+        HBox hboxknoppen = new HBox(this.naar_beginscherm, this.afsluiten, this.naar_speelscherm);
 
         //eindbox
         VBox eindbox = new VBox(20, hboxnaam, vboxhoeveelheid, hboxsoorten, vboxtijd, hboxknoppen);
 
         pane.getChildren().addAll(eindbox);
         primaryStage.setScene(scene);
+
+        naar_speelscherm.setOnAction(event -> {
+            if ((tekst.getText() != null && ! tekst.getText().isEmpty())){
+                inst.setNaam(tekst.getText());
+                // TODO: opties toevoegen aan instellingen
+                speelscherm.start(primaryStage);
+            }else{
+                label_event.setText("Je moet je naam invullen.");
+            }
+        });
         primaryStage.show();
     }
 }
+
