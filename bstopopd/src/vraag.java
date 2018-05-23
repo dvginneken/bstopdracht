@@ -404,8 +404,8 @@ public class vraag {
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         String[] vragenset2 = {
-                "Welk aminozuur is %s?\nA) %s\nB) %s\nC) %s\nD) %s",
-                "Welk aminozuur is niet %s ?\nA) %s\nB) %s\nC) %s\nD) %s"};
+                "Welk aminozuur heeft een voorkeur voor %s?\nA) %s\nB) %s\nC) %s\nD) %s",
+                "Welk aminozuur heeft geen voorkeur voor een %s ?\nA) %s\nB) %s\nC) %s\nD) %s"};
         Integer rng = rand.nextInt(3);
         if (rng == 0){
             amminozuur acid2 = getRNDAcidNot(String.valueOf(aminozuur.getThreed()));
@@ -599,7 +599,7 @@ public class vraag {
     }
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         vraag[] vragen = new vraag[40];
         for (Integer i = 0; i < 40; i++){
             vragen[i] = new vraag("3l", "1l");
@@ -613,7 +613,7 @@ public class vraag {
         System.out.println(vragen.getVraag());
         System.out.println(vragen.getAntwoord());
         System.out.println(vragen.getOpties()[0]+ " " +vragen.getOpties()[1]+ " " + vragen.getOpties()[2]);*/
-    }
+    /*}*/
 
     private amminozuur[] lijst_aminozuur(){
         File file = new File("").getAbsoluteFile();
