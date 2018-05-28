@@ -21,66 +21,150 @@ public class vraag {
     private String typeanswer = "r";
     private String typequestion = "r";
 
+
+    /**
+     * constructor vraag
+     * klasse kan worden aangemaakt zonder opties mee te geven.
+     */
     public vraag() {
     }
 
+    /**
+     * Constructor vraag
+     * klasse kan worden aangemaakt met type vraag en type antwoord.
+     * @param typequestion het type vraag dat wordt aangemaakt. opties: {1l, 3l, full, hydro, charge, size, threed, sidechain}
+     *               "Welk aminozuur is {typequestion}"
+     * @param typeanswer het type antoowrd dat woord aangemaakt. opties: {1l, 3l, full, hydro, charge, size, threed, sidechain}
+     *                   {"typeaanswer", "typeanswer", "typeanswer"}
+     */
     public vraag(String typequestion, String typeanswer) {
         this.typequestion = typequestion;
         this.typeanswer = typeanswer;
     }
 
+    /**
+     * het ophalen van de vraag.
+     * @return vraag
+     */
     public String getVraag() {
         return vraag;
     }
 
+
+    /**
+     * het zetten van de vraag.
+     * @param vraag
+     */
     public void setVraag(String vraag) {
         this.vraag = vraag;
     }
 
+
+    /**
+     * het opvragen van de antwoorden van een vraag.
+     * @return opties, een stringlist van 3 of 4 strings.
+     */
     public String[] getOpties() {
         return opties;
     }
 
+
+    /**
+     * het zetten van de opties.
+     * @param opties moet een stringlist zijn van 3 of 4 strings.
+     */
     public void setOpties(String[] opties) {
         this.opties = opties;
     }
 
+    /**
+     * het antwoord opvragen
+     * @return antwoord, een string met het juiste antwoord op de vraag.
+     */
     public String getAntwoord() {
         return antwoord;
     }
 
+
+    /**
+     * het antwoord setten.
+     * @param antwoord, een string met het juiste antwoord.
+     */
     public void setAntwoord(String antwoord) {
         this.antwoord = antwoord;
     }
 
+
+    /**
+     * aminozuur[] een lijst van alle aminozuren opvragen
+     * @return aminozuren, een lijst van aminozuren.
+     */
     public amminozuur[] getAminozuren() {
         return aminozuren;
     }
 
+
+    /**
+     * aminozuren setten
+     * @param aminozuren moet een lijst met aminozuur objecten in.
+     */
     public void setAminozuren(amminozuur[] aminozuren) {
         this.aminozuren = lijst_aminozuur();
     }
 
+
+    /**
+     * vraag de hoeveelheid aminozuren in het object.
+     * @return het aantal aminozuren in het object.
+     */
     public Integer getHoeveelaminozuur() {
         return hoeveelaminozuur;
     }
 
+
+    /**
+     * get typeanswer, hier kan je het type antwoord dat wordt gebruikt in de klasse opvragen.
+     * @return string typeantwoord.
+     */
     public String getTypeanswer() {
         return typeanswer;
     }
 
+
+    /**
+     * hier kan je het type vraag dat wordt gebruikt zetten.
+     * @param typeanswer, string typeantwoord.
+     */
     public void setTypeanswer(String typeanswer) {
         this.typeanswer = typeanswer;
     }
 
+
+    /**
+     * Hier kan je het type vraag opvragen.
+     * @return typequestion, string met het type vraag.
+     */
     public String getTypequestion() {
         return typequestion;
     }
 
+
+    /**
+     * hier kan je het type vraag zetten.
+     * @param typequestion, string met het type vraag.
+     */
     public void setTypequestion(String typequestion) {
         this.typequestion = typequestion;
     }
 
+
+    /**
+     * Deze functie neemt een aminozuur en returned de waarde die in typequestion of typeanswer wordt meegegeven.
+     * als r gekozen wordt zal er een random waarde worden teruggegeven.
+     * @param type, deze waarde is typequestion of typeanswer.
+     * @param aminozuur het aminozuur van de vraag.
+     * @return een waarde van het aminozuur object afhankelijk van type.
+     */
     public String answertype(String type , amminozuur aminozuur){
         switch (type){
             case "r":
@@ -102,9 +186,13 @@ public class vraag {
             case "sidechain":
                 return aminozuur.getSidechain();
         }
-        return "Failed to recognise answertype value (Line 74 vraag.java)";
+        return "Failed to recognise answertype value (Line 168 vraag.java)";
     };
 
+
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de volledige naam wordt gebruikt van het aminozuur object.
+     */
     public void fullnameQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -132,6 +220,9 @@ public class vraag {
     }
 
 
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de eenlettercode wordt gebruikt van het aminozuur object.
+     */
     public void onelQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -163,6 +254,10 @@ public class vraag {
         this.opties = getAnswerset(rng, aminozuur, acid2, acid3);
     }
 
+
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de drie-lettercode wordt gebruikt van het aminozuur object.
+     */
     public void threelQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -187,11 +282,18 @@ public class vraag {
             acid2 = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         }
         while(rng == 1){
-            rng = rand.nextInt(7);;
+            rng = rand.nextInt(7);
         }
         this.opties = getAnswerset(rng, aminozuur, acid2, acid3);
     }
 
+    /**
+     * deze functie maakt een stringlijst met antwoorden afhankelijk van het type antwoord dat gekozen is.
+     * Deze functie heeft 4 inputs:
+     *  number: het meegegeven nummer voor het type antwoorden dat moet worden gegenereerd.
+     *  aminozuur, het aminozuur gebruikt in de klasse
+     *  acid2,acid3 random aminozuur objecten om random antwoorden te maken.
+     */
     private String[] getAnswerset(Integer number, amminozuur aminozuur, amminozuur acid2, amminozuur acid3){
         String[] optieset = {"", "", ""};
         switch (number){
@@ -237,6 +339,12 @@ public class vraag {
         return optieset;
     }
 
+
+    /**
+     * shuffle functie neemt een stirnglijst, zet deze door elkaar in random volgorde.
+     * @param optieset
+     * @return optieset dezelfde stringlijst maar dan in andere volgorde.
+     */
     public String[] shuffle(String[] optieset){
         List<String> strList = Arrays.asList(optieset);
         Collections.shuffle(strList);
@@ -244,6 +352,10 @@ public class vraag {
         return optieset;
     }
 
+
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de hydrofobiciteit wordt gebruikt van het aminozuur object.
+     */
     public void hydrofibicQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -296,6 +408,9 @@ public class vraag {
         }
     }
 
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de dlading wordt gebruikt van het aminozuur object.
+     */
     public void chargeQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -348,6 +463,9 @@ public class vraag {
         }
     }
 
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de grootte wordt gebruikt van het aminozuur object.
+     */
     public void grootteQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -400,6 +518,10 @@ public class vraag {
         }
     }
 
+
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de 3d structuur wordt gebruikt van het aminozuur object.
+     */
     public void threedQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -457,6 +579,12 @@ public class vraag {
             this.antwoord = aminozuur.getThreed();
         }
     }
+
+
+    /**
+     * deze functie zet het vraag object naar een vraag waarbij de sidechain wordt gebruikt van het aminozuur object.
+     * //todo werkt nog niet. antwoorden zijn altijd null
+     */
     public void sidechainQuestions(){
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -509,6 +637,12 @@ public class vraag {
         }
     }
 
+
+    /**
+     * Deze functie reset meegegeven aminozuur net zo lang tot de waarde type niet meer voorkomt in het aminozuur.
+     * @param type een waarde in het aminozuur
+     * @return aminozuur zonde waarde type.
+     */
     private amminozuur getRNDAcidNot(String type){
         Random rand = new Random();
         amminozuur aminozuur = lijst_aminozuur()[rand.nextInt(this.hoeveelaminozuur)];
@@ -525,6 +659,11 @@ public class vraag {
         return aminozuur;
     }
 
+    /**
+     * Deze functie reset meegegeven aminozuur net zo lang tot de waarde type in het random aminozuur vooromt.
+     * @param type een waarde die het aminozuur moet hebben.
+     * @return aminozuur met waarde type.
+     */
     private amminozuur getRNDAcidyes(String type){
         Random rand = new Random();
         amminozuur aminozuur = lijst_aminozuur()[rand.nextInt(this.hoeveelaminozuur)];
@@ -542,6 +681,10 @@ public class vraag {
     }
 
 
+    /**
+     * Deze functie genereerd een random vraag, als deze functie wordt aangeroepen zal random worden gekozen wat voor
+     * soort vraag het object wordt.
+     */
     public void generatequestions(){
         Random rand = new Random();
         int type = rand.nextInt(7);
@@ -575,6 +718,13 @@ public class vraag {
         }
     }
 
+
+    /**
+     * Deze functie checkt of de antwoord en vraag gekozen overeenkomen met de gekozen type vraag en antwoord.
+     * zo niet zal een ander antwoord gekozen worden.
+     * @param type
+     * @return type
+     */
     public int typequestionCheck(Integer type){
         Random rand = new Random();
         type = rand.nextInt(7);
@@ -598,23 +748,10 @@ public class vraag {
         return type;
     }
 
-
-    /*public static void main(String[] args) {
-        vraag[] vragen = new vraag[40];
-        for (Integer i = 0; i < 40; i++){
-            vragen[i] = new vraag("3l", "1l");
-            vragen[i].generatequestions();
-            System.out.println(vragen[i].getVraag());
-            System.out.println(vragen[i].getAntwoord());
-            System.out.println(vragen[i].getOpties()[0]+ " " +vragen[i].getOpties()[1]+ " " + vragen[i].getOpties()[2] + "\n");
-        }
-
-        /*vragen.fullnameQuestions();
-        System.out.println(vragen.getVraag());
-        System.out.println(vragen.getAntwoord());
-        System.out.println(vragen.getOpties()[0]+ " " +vragen.getOpties()[1]+ " " + vragen.getOpties()[2]);*/
-    /*}*/
-
+    /**
+     * deze functie leest het bestand met aminozuren in en maakt een lijst van aminozuren.
+     * @return
+     */
     private amminozuur[] lijst_aminozuur(){
         File file = new File("").getAbsoluteFile();
         File aminoacids = new File(file+"\\bstopopd\\src\\aminoacids.txt");
@@ -639,6 +776,22 @@ public class vraag {
         }
         return aminozuurlist;
     }
+
+        /*public static void main(String[] args) {
+        vraag[] vragen = new vraag[40];
+        for (Integer i = 0; i < 40; i++){
+            vragen[i] = new vraag("3l", "1l");
+            vragen[i].generatequestions();
+            System.out.println(vragen[i].getVraag());
+            System.out.println(vragen[i].getAntwoord());
+            System.out.println(vragen[i].getOpties()[0]+ " " +vragen[i].getOpties()[1]+ " " + vragen[i].getOpties()[2] + "\n");
+        }
+
+        /*vragen.fullnameQuestions();
+        System.out.println(vragen.getVraag());
+        System.out.println(vragen.getAntwoord());
+        System.out.println(vragen.getOpties()[0]+ " " +vragen.getOpties()[1]+ " " + vragen.getOpties()[2]);*/
+    /*}*/
 }
 
 
