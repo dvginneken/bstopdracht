@@ -248,8 +248,8 @@ public class vraag {
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         String[] vragenset2 = {
-                "Welk aminozuur is %s?\nA) %s\nB) %s\nC) %s",
-                "Welk aminozuur is niet %s ?\nA) %s\nB) %s\nC) %s"};
+                "Welk aminozuur is %s?",
+                "Welk aminozuur is niet %s ?"};
         Integer rng = rand.nextInt(3);
         if (rng == 0){
             amminozuur acid2 = getRNDAcidNot(String.valueOf(aminozuur.getHybrofobe()));
@@ -263,7 +263,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], aminozuur.getHybrofobe(), answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], aminozuur.getHybrofobe());
             this.antwoord = answertype(this.typeanswer, aminozuur);
         }
         else if (rng == 1){
@@ -283,7 +283,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], state, answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], state);
             this.antwoord = answertype(this.typeanswer, aminozuur);
         }
         else if (rng == 2){
@@ -291,7 +291,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format("Wat is de hydrofobiciteit van %s\nA) %s\nB) %s\nC) %s", answertype(this.typequestion, aminozuur), answers[0], answers[1], answers[2]);
+            this.vraag = String.format("Wat is de hydrofobiciteit van %s", answertype(this.typequestion, aminozuur));
             this.antwoord = aminozuur.getHybrofobe();
         }
     }
@@ -300,8 +300,8 @@ public class vraag {
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         String[] vragenset2 = {
-                "Welk aminozuur is %s?\nA) %s\nB) %s\nC) %s",
-                "Welk aminozuur is niet %s ?\nA) %s\nB) %s\nC) %s"};
+                "Welk aminozuur is %s?",
+                "Welk aminozuur is niet %s ?"};
         Integer rng = rand.nextInt(3);
         if (rng == 0){
             amminozuur acid2 = getRNDAcidNot(String.valueOf(aminozuur.getCharge()));
@@ -315,7 +315,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], aminozuur.getCharge(), answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], aminozuur.getCharge());
             this.antwoord = answertype(this.typeanswer, acid3);
         }
         else if (rng == 1){
@@ -335,7 +335,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], state, answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], state);
             this.antwoord = answertype(this.typeanswer, aminozuur);
         }
         else if (rng == 2){
@@ -343,7 +343,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format("Wat is de lading van %s\nA) %s\nB) %s\nC) %s", answertype(this.typequestion, aminozuur), answers[0], answers[1], answers[2]);
+            this.vraag = String.format("Wat is de lading van %s", answertype(this.typequestion, aminozuur));
             this.antwoord = aminozuur.getCharge();
         }
     }
@@ -352,8 +352,8 @@ public class vraag {
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         String[] vragenset2 = {
-                "Welk aminozuur is %s?\nA) %s\nB) %s\nC) %s",
-                "Welk aminozuur is niet %s ?\nA) %s\nB) %s\nC) %s"};
+                "Welk aminozuur is %s?",
+                "Welk aminozuur is niet %s ?"};
         Integer rng = rand.nextInt(3);
         if (rng == 0){
             amminozuur acid2 = getRNDAcidNot(String.valueOf(aminozuur.getGrootte()));
@@ -367,7 +367,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], aminozuur.getGrootte(), answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], aminozuur.getGrootte());
             this.antwoord = aminozuur.getGrootte();
         }
         else if (rng == 1){
@@ -387,7 +387,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], state, answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], state);
             this.antwoord = answertype(this.typeanswer, aminozuur);
         }
         else if (rng == 2){
@@ -395,7 +395,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format("Wat is de grootte van %s\nA) %s\nB) %s\nC) %s", answertype(this.typequestion, aminozuur), answers[0], answers[1], answers[2]);
+            this.vraag = String.format("Wat is de grootte van %s", answertype(this.typequestion, aminozuur));
             this.antwoord = aminozuur.getGrootte();
         }
     }
@@ -404,8 +404,8 @@ public class vraag {
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         String[] vragenset2 = {
-                "Welk aminozuur heeft een voorkeur voor %s?\nA) %s\nB) %s\nC) %s\nD) %s",
-                "Welk aminozuur heeft geen voorkeur voor een %s ?\nA) %s\nB) %s\nC) %s\nD) %s"};
+                "Welk aminozuur heeft een voorkeur voor %s?",
+                "Welk aminozuur heeft geen voorkeur voor een %s ?"};
         Integer rng = rand.nextInt(3);
         if (rng == 0){
             amminozuur acid2 = getRNDAcidNot(String.valueOf(aminozuur.getThreed()));
@@ -422,7 +422,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], aminozuur.getThreed(), answers[0], answers[1], answers[2], answers[3]);
+            this.vraag = String.format(vragenset2[rng], aminozuur.getThreed());
             this.antwoord = answertype(this.typequestion, aminozuur);
         }
         else if (rng == 1){
@@ -445,7 +445,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], state, answers[0], answers[1], answers[2], answers[3]);
+            this.vraag = String.format(vragenset2[rng], state);
             this.antwoord = answertype(this.typeanswer, aminozuur);
         }
         else if (rng == 2){
@@ -453,7 +453,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format("Wat is de 3D-structuur van %s\nA) %s\nB) %s\nC) %s", answertype(this.typequestion, aminozuur), answers[0], answers[1], answers[2], answers[3]);
+            this.vraag = String.format("Wat is de 3D-structuur van %s", answertype(this.typequestion, aminozuur));
             this.antwoord = aminozuur.getThreed();
         }
     }
@@ -461,8 +461,8 @@ public class vraag {
         Random rand = new Random();
         amminozuur aminozuur = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
         String[] vragenset2 = {
-                "Welk aminozuur is %s?\nA) %s\nB) %s\nC) %s",
-                "Welk aminozuur is niet %s ?\nA) %s\nB) %s\nC) %s"};
+                "Welk aminozuur is %s?",
+                "Welk aminozuur is niet %s ?"};
         Integer rng = rand.nextInt(3);
         if (rng == 0){
             amminozuur acid2 = getRNDAcidNot(String.valueOf(aminozuur.getSidechain()));
@@ -476,7 +476,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], aminozuur.getSidechain(), answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], aminozuur.getSidechain());
             this.antwoord = aminozuur.getSidechain();
         }
         else if (rng == 1){
@@ -496,7 +496,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format(vragenset2[rng], state, answers[0], answers[1], answers[2]);
+            this.vraag = String.format(vragenset2[rng], state);
             this.antwoord = aminozuur.getSidechain();
         }
         else if (rng == 2){
@@ -504,7 +504,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format("Wat is de zijketen van %s\nA) %s\nB) %s\nC) %s", answertype(this.typequestion, aminozuur), answers[0], answers[1], answers[2]);
+            this.vraag = String.format("Wat is de zijketen van %s", answertype(this.typequestion, aminozuur));
             this.antwoord = aminozuur.getSidechain();
         }
     }

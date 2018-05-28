@@ -19,9 +19,16 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class toetsScherm extends Application {
+
+    String[] namelist;
 
     public static void main(String[] args) {
         launch(args);
@@ -51,7 +58,10 @@ public class toetsScherm extends Application {
         final FileChooser fileChooser = new FileChooser();
         Button inputfile = new Button("selecteer bestand");
         Text filename = new Text();
-        left.getChildren().addAll(inputfile, filename);
+
+        Button generate = new Button("genereer toets!");
+
+        left.getChildren().addAll(inputfile, filename, generate);
 
         /*group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
@@ -63,17 +73,21 @@ public class toetsScherm extends Application {
             }
         });*/
 
+
+
         inputfile.setOnAction((ActionEvent event) -> {
 
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
                 filename.setText("Geselecteerd: "+file.getName());
-
             }
             try{
                 Scanner scanner = new Scanner(file);
+                this.namelist = new String[(int) file.length()];
+                Integer i = 0;
                 while (scanner.hasNext()){
-                    System.out.println(scanner.nextLine());
+                    this.namelist[i] = scanner.nextLine().split(" ")[0];
+                    i++;
                 }
             }
             catch (FileNotFoundException e){
@@ -85,6 +99,24 @@ public class toetsScherm extends Application {
 
         });
 
+        generate.setOnAction((ActionEvent event) -> {
+            RadioButton chk = (RadioButton)group.getSelectedToggle();
+
+
+            if (!chk.getText().trim().isEmpty()){
+                System.out.println((chk.getText().trim()));
+                Integer optie = Integer.parseInt(chk.getText().trim());
+                vraag[] vraaglijst = new vraag[optie];
+                try{
+                    writeFile(vraaglijst, optie);
+                }
+                catch (IOException e){
+                    System.out.println(e);
+                }
+            }
+
+        });
+
         mainPane.getChildren().addAll(titel,contentholder);
 
 
@@ -92,5 +124,36 @@ public class toetsScherm extends Application {
         Scene main = new Scene(mainPane, 1280,600);
         primaryStage.setScene(main);
         primaryStage.show();
+    }
+
+    public void writeFile(vraag[] vraaglijst, Integer option) throws IOException{
+        String pathway = "C:/Users/julian/IdeaProjects/bstopdracht3/bstopopd/src/";
+        for (Integer i = 0; i < option; i++){
+            vraaglijst[i] = new vraag("1l", "3l");
+            for (String naam : this.namelist){
+                File outfile = new File(pathway+"AAtest_"+naam+".txt");
+                FileWriter fw = new FileWriter(outfile, true);
+                PrintWriter pw = new PrintWriter(fw);
+                vraaglijst[i].generatequestions();
+                pw.println((i+1)+". "+ vraaglijst[i].getVraag() + "\n");
+                String format = "";
+                switch (vraaglijst[i].getOpties().length){
+                    case 3:
+                        format = String.format("A) %s\r\nB) %s\r\nC) %s\r\n", vraaglijst[i].getOpties()[0], vraaglijst[i].getOpties()[1], vraaglijst[i].getOpties()[2]);
+                        pw.println(format);
+                        break;
+                    case 4:
+                        format = String.format("A) %s\r\nB) %s\r\nC) %s\r\nD) %s\r\n", vraaglijst[i].getOpties()[0], vraaglijst[i].getOpties()[1], vraaglijst[i].getOpties()[2], vraaglijst[i].getOpties()[3]);
+                        pw.println(format);
+                        break;
+                }
+
+
+                System.out.println(i.toString()+ vraaglijst[i].getVraag());
+                pw.close();
+
+            }
+
+        }
     }
 }
