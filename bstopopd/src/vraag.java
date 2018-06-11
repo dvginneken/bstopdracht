@@ -754,7 +754,14 @@ public class vraag {
      */
     private amminozuur[] lijst_aminozuur(){
         File file = new File("").getAbsoluteFile();
-        File aminoacids = new File(file+"\\bstopopd\\src\\aminoacids.txt");
+        File aminoacids = new File("");
+        if (System.getProperty("os.name").split("")[0] == "Windows" ){
+            aminoacids = new File(file+"\\bstopopd\\src\\aminoacids.txt");
+        }
+        else{
+            aminoacids = new File(file+"/bstopopd/src/aminoacids.txt");
+        };
+
         Integer leng = (int) aminoacids.length();
         amminozuur[] aminozuurlist = new amminozuur[leng];
         try {
@@ -777,6 +784,8 @@ public class vraag {
         return aminozuurlist;
     }
 
+
+
         /*public static void main(String[] args) {
         vraag[] vragen = new vraag[40];
         for (Integer i = 0; i < 40; i++){
@@ -787,10 +796,10 @@ public class vraag {
             System.out.println(vragen[i].getOpties()[0]+ " " +vragen[i].getOpties()[1]+ " " + vragen[i].getOpties()[2] + "\n");
         }
 
-        /*vragen.fullnameQuestions();
+        vragen.fullnameQuestions();
         System.out.println(vragen.getVraag());
         System.out.println(vragen.getAntwoord());
-        System.out.println(vragen.getOpties()[0]+ " " +vragen.getOpties()[1]+ " " + vragen.getOpties()[2]);*/
+        System.out.println(vragen.getOpties()[0]+ " " +vragen.getOpties()[1]+ " " + vragen.getOpties()[2]);
     /*}*/
 }
 

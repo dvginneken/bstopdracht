@@ -128,18 +128,19 @@ public class toetsScherm extends Application {
 
     public void writeFile(vraag[] vraaglijst, Integer option) throws IOException{
         String pathway = "C:/Users/julian/IdeaProjects/bstopdracht3/bstopopd/src/";
-        for (Integer i = 0; i < option; i++){
-            vraaglijst[i] = new vraag();
-            for (String naam : this.namelist){
-                File outfile = new File(pathway+"AAtest_"+naam+".txt");
-                FileWriter clear = new FileWriter(outfile, false);
-                String format = "";
-                clear.append(format);
-                clear.close();
+
+        for (String naam : this.namelist){
+            File outfile = new File(pathway+"AAtest_"+naam+".txt");
+            FileWriter clear = new FileWriter(outfile, false);
+            String format = "";
+            clear.append(format);
+            clear.close();
+            for (Integer i = 0; i < option; i++) {
+                vraaglijst[i] = new vraag();
                 FileWriter fw = new FileWriter(outfile, true);
                 PrintWriter pw = new PrintWriter(fw);
                 vraaglijst[i].generatequestions();
-                pw.println((i+1)+". "+ vraaglijst[i].getVraag() + "\n");
+                pw.println((i + 1) + ". " + vraaglijst[i].getVraag() + "\n");
 
                 switch (vraaglijst[i].getOpties().length){
                     case 3:
@@ -151,13 +152,9 @@ public class toetsScherm extends Application {
                         pw.println(format);
                         break;
                 }
-
-
                 System.out.println(i.toString()+ vraaglijst[i].getVraag());
                 pw.close();
-
             }
-
         }
     }
 }
