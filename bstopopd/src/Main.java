@@ -3,8 +3,10 @@ package src;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+//De main functie die wat schermen aanroept, te beginnen bij het startscherm.
+
 public class Main extends Application {
-    //Instellingen instellingen = new Instellingen();
+    Instellingen instellingen = new Instellingen();
     Optiescherm optiescherm = new Optiescherm();
     startScherm startscherm = new startScherm();
     toetsScherm toetsscherm = new toetsScherm();
@@ -14,14 +16,6 @@ public class Main extends Application {
         startscherm.genereer.setOnAction(event -> optiescherm.start(primaryStage));
         startscherm.Startspel.setOnAction(event -> toetsscherm.start(primaryStage));
         optiescherm.naar_beginscherm.setOnAction(event -> startscherm.start(primaryStage));
-//        optiescherm.naar_speelscherm.setOnAction(event -> {
-//            if ((optiescherm.tekst.getText() != null && !optiescherm.tekst.getText().isEmpty())){
-//                instellingen.setNaam(optiescherm.tekst.getText());
-//                speelscherm.start(primaryStage);
-//            }else{
-//                optiescherm.label_event.setText("Je moet je naam invullen.");
-//            }
-//        });
         startscherm.start(primaryStage);
     }
 
