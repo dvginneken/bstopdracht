@@ -130,6 +130,7 @@ public class Optiescherm extends Application {
         //      en de soort vraag (vraagkeuze) wordt in het instellingen scherm gezet
         //  - wordt gecheck of er iets is aangeklikt bij de soort antwoorden (chk_sa)
         //      en de soort antwoorden (antwoordkeuze) wordt in het instellingen scherm
+            - wordt gecheckt of er verschillende dingen zijn gekozen bij soort vraag en soort antwoord.
         //  - wordt gecheckt of er iets is aangeklikt bij de tijd(chk_tijd)
         //      en deze keuze(tijdkeuze) wordt in instellingen gezet
         //  - wordt gecheckt of er iets is ingevuld bij seconden (chk_sec)

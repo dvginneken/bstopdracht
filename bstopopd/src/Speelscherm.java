@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
@@ -33,12 +35,14 @@ public class Speelscherm extends Application {
         Scene scene = new Scene(pane, 1300, 800);
         primaryStage.setTitle("Speelscherm");
 
-        Label opening = new Label("Hoi " + this.instellingen.getNaam());
+
+        Text opening = new Text("Hoi " + this.instellingen.getNaam());
+        opening.setFont(Font.font("open-sans", 25));
 
 
+        HBox knoppen = new HBox(10, this.naar_beginscherm, this.vorige, this.volgende, this.starten);
+        VBox eindbox = new VBox(10, opening);
 
-        HBox knoppen = new HBox(this.naar_beginscherm, this.vorige, this.volgende, this.starten);
-        VBox eindbox = new VBox(opening);
 
         String sv = this.instellingen.getSoort_vragen();
         String sa = this.instellingen.getSoort_antwoorden();
@@ -46,9 +50,17 @@ public class Speelscherm extends Application {
         vraag question = new vraag(sv, sa);
         question.generatequestions();
         this.starten.setOnAction(event -> {
-            String test = question.getVraag();
-            Label random = new Label(test);
-            eindbox.getChildren().add(random);
+            String getvraag = question.getVraag();
+            Label vraag_label = new Label(getvraag);
+            eindbox.getChildren().add(vraag_label);
+            String getopties[] = question.getOpties();
+            final ToggleGroup optiegroep = new ToggleGroup();
+            for (String optie:getopties){
+                RadioButton optiebutton = new RadioButton(optie + "\n");
+                optiebutton.setToggleGroup(optiegroep);
+                eindbox.getChildren().add(optiebutton);
+            }
+
         });
 
         //Label tekst = new Label("gegevens:" + this.instellingen.getHoeveelheid() + this.instellingen.getSeconden() +

@@ -168,24 +168,25 @@ public class vraag {
      * @return een waarde van het aminozuur object afhankelijk van type.
      */
     public String answertype(String type , amminozuur aminozuur){
+        System.out.println(type);
         switch (type){
             case "r":
                 return aminozuur.getRandomValue();
-            case "1l":
+            case "1-lettercode":
                 return  ""+aminozuur.getOnel();
-            case "3l":
+            case "3-lettercode":
                 return aminozuur.getThreel();
-            case "full":
+            case "Volledige naam":
                 return aminozuur.getNaam();
-            case "hydro":
+            case "Hydrofobiciteit":
                 return aminozuur.getHybrofobe();
-            case "charge":
+            case "Lading":
                 return aminozuur.getCharge();
-            case "size":
+            case "Grootte":
                 return aminozuur.getGrootte();
-            case "treed":
+            case "3D-voorkeur":
                 return aminozuur.getThreed();
-            case "sidechain":
+            case "Structuur":
                 return aminozuur.getSidechain();
         }
         return "Failed to recognise answertype value (Line 168 vraag.java)";
@@ -250,7 +251,7 @@ public class vraag {
         if (rng == 0){
             rng = 7;
         }
-        if(this.typequestion.equals("1l") && rng == 1){
+        if(this.typequestion.equals("1-lettercode") && rng == 1){
 
         }
         this.opties = getAnswerset(rng, aminozuur, acid2, acid3);
@@ -731,17 +732,17 @@ public class vraag {
         Random rand = new Random();
         type = rand.nextInt(7);
         switch (this.typequestion){
-            case "1l":
+            case "1-lettercode":
                 while (type == 1 || type == 2){
                     type = rand.nextInt(7);
                 }
                 break;
-            case "3l":
+            case "3-lettercode":
                 while (type == 0 || type == 2){
                     type = rand.nextInt(7);
                 }
                 break;
-            case "full":
+            case "Volledige naam":
                 while (type == 1 || type == 0){
                     type = rand.nextInt(7);
                 }
@@ -791,7 +792,7 @@ public class vraag {
         /*public static void main(String[] args) {
         vraag[] vragen = new vraag[40];
         for (Integer i = 0; i < 40; i++){
-            vragen[i] = new vraag("3l", "1l");
+            vragen[i] = new vraag("3-lettercode", "1-lettercode");
             vragen[i].generatequestions();
             System.out.println(vragen[i].getVraag());
             System.out.println(vragen[i].getAntwoord());
