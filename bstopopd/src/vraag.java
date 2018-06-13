@@ -40,6 +40,8 @@ public class vraag {
     public vraag(String typequestion, String typeanswer) {
         this.typequestion = typequestion;
         this.typeanswer = typeanswer;
+
+
     }
 
     /**

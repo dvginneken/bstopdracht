@@ -12,6 +12,8 @@ public class Main extends Application {
     toetsScherm toetsscherm = new toetsScherm();
     //Speelscherm speelscherm = new Speelscherm();
 
+
+
     public void start(Stage primaryStage) {
         startscherm.genereer.setOnAction(event -> optiescherm.start(primaryStage));
         startscherm.Startspel.setOnAction(event -> toetsscherm.start(primaryStage));

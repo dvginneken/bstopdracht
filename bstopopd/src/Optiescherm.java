@@ -156,23 +156,26 @@ public class Optiescherm extends Application {
                         inst.setSoort_antwoorden(antwoordkeuze);
                         RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
                         String tijdkeuze = chk_tijd.getText();
-                        if ((chk_tijd != null)){
-                            inst.setTijd(tijdkeuze);
-                            RadioButton chk_sec = (RadioButton)tijdgroep.getSelectedToggle();
-                            String sec_keuze = chk_sec.getText();
-                            inst.setSeconden(sec_keuze);
-                            this.speelscherm.start(primaryStage);
+                        if((vraagkeuze.equals(antwoordkeuze))){
+                            errorlabel_v.setText("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
+                        }else
+                            if ((chk_tijd != null)){
+                                inst.setTijd(tijdkeuze);
+                                RadioButton chk_sec = (RadioButton)tijdgroep.getSelectedToggle();
+                                String sec_keuze = chk_sec.getText();
+                                inst.setSeconden(sec_keuze);
+                                this.speelscherm.start(primaryStage);
+                            }else{
+                                errorlabel_tijd.setText("Je moet kiezen of je wel of niet met tijd wilt spelen.");
+                            }
                         }else{
-                            errorlabel_tijd.setText("Je moet kiezen of je wel of niet met tijd wilt spelen.");
+                            errorlabel_a.setText("Je moet een soort antwoord selecteren.");
                         }
                     }else{
-                        errorlabel_a.setText("Je moet een soort antwoord selecteren.");
+                        errorlabel_v.setText("Je moet een soort vraag selecteren.");
                     }
                 }else{
-                    errorlabel_v.setText("Je moet een soort vraag selecteren.");
-                }
-            }else{
-                label_event.setText("Je moet je naam invullen.");
+                    label_event.setText("Je moet je naam invullen.");
             }
         });
         primaryStage.show();
