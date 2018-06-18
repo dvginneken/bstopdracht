@@ -135,7 +135,6 @@ public class toetsScherm extends Application {
         };
         if (this.namelist != null){
             //Integer amount = option * this.namelist.length;
-            Integer count = 0;
             for (String naam : this.namelist){
                 File outfile = new File(pathway+"AAtest_"+naam+".txt");
                 File outfile2 = new File(pathway+"AANT_"+naam+".txt");
@@ -162,9 +161,8 @@ public class toetsScherm extends Application {
                     pw.close();
                     FileWriter fw2 = new FileWriter(outfile2, true);
                     PrintWriter pw2 = new PrintWriter(fw2);
-                    pw2.println(i+1 + vraaglijst[i].getVraag()+".\r\n " +vraaglijst[i].getAntwoord());
+                    pw2.println((i + 1) + ". " + vraaglijst[i].getVraag() + "\r\n"+ vraaglijst[i].getAntwoord()+ "\r\n");
                     pw2.close();
-                    count++;
                 }
             }
         }

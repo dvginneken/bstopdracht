@@ -168,7 +168,6 @@ public class vraag {
      * @return een waarde van het aminozuur object afhankelijk van type.
      */
     public String answertype(String type , amminozuur aminozuur){
-        System.out.println(type);
         switch (type.trim()){
             case "r":
                 return aminozuur.getRandomValue();
