@@ -488,7 +488,7 @@ public class vraag {
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
             this.vraag = String.format(vragenset2[rng], aminozuur.getGrootte());
-            this.antwoord = aminozuur.getGrootte();
+            this.antwoord = answertype(this.typeanswer, aminozuur);
         }
         else if (rng == 1){
             String[] grootte = {"groot", "middel", "klein"};
