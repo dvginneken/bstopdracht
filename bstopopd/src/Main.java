@@ -17,6 +17,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         startscherm.genereer.setOnAction(event -> optiescherm.start(primaryStage));
         startscherm.Startspel.setOnAction(event -> toetsscherm.start(primaryStage));
+        startscherm.quit.setOnAction(event -> {startscherm.close(primaryStage);});
         optiescherm.naar_beginscherm.setOnAction(event -> startscherm.start(primaryStage));
         startscherm.start(primaryStage);
     }

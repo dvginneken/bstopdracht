@@ -19,7 +19,6 @@ public class startScherm extends Application {
     Button Startspel = new Button("Naar toetsscherm");
     Button genereer = new Button("Naar optiescherm");
     Button quit = new Button("Afsluiten");
-    //Text title = new Text("AminozuurQuiz!");
     Label title = new Label("Aminozuurquiz!");
 
     public void main(String[] args) {
@@ -88,5 +87,8 @@ public class startScherm extends Application {
         return button;
     }
 
+    public void close(Stage primaryStage){
+        primaryStage.close();
+    }
 }
 
