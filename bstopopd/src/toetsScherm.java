@@ -4,18 +4,23 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.swing.plaf.LabelUI;
 import javax.swing.plaf.PanelUI;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,10 +33,14 @@ import java.util.Scanner;
 public class toetsScherm extends Application {
 
     List<String> namelist = new ArrayList<String>();
-    Button naar_beginscherm = new Button("Stoppen");
-    Label filename = new Label("Geselecteerd: ");
-    Label filename2 = new Label("Geselecteerd: ");
-    Label previewLabel = new Label("");
+    Button naar_beginscherm = new Button("Naar beginscherm");
+    Label filename = new Label("Geselecteerd bestand: ");
+    Label previewLabel = new Label("Geen bestand geselecteerd.");
+    Label title = new Label("Genereer toetsen");
+    Label Hoeveel = new Label("Hoeveel vragen moeten er gegenereerd worden?");
+    Button inputfile = new Button("selecteer bestand");
+    Button generate = new Button("genereer toetsbestanden");
+    Label progress = new Label("");
 
     public static void main(String[] args) {
         launch(args);
@@ -39,33 +48,61 @@ public class toetsScherm extends Application {
 
     @Override
     public void start(Stage primaryStage){
-        VBox mainPane = new VBox();
-        mainPane.setPadding(new Insets(100,300,100,300));
-        Text titel = new Text("Genereer toets");
-        HBox contentholder = new HBox();
-        VBox left = new VBox();
-        contentholder.getChildren().addAll(left, buildright());
-        Text hoeveelheid = new Text("Hoeveel vragen:\n");
+        // Building blocks
+        BorderPane mainPane = new BorderPane();
+        VBox mainbox = new VBox();
+        StackPane stackmain = new StackPane();
+        HBox buttonsbox = new HBox(10);
+        SplitPane splitmain = new SplitPane();
+        VBox left = new VBox(0);
+        VBox right = new VBox();
+        Pane selectedfile = new Pane();
+        Pane hoeveelvraag = new Pane();
 
+        mainPane.setCenter(mainbox);
+        stackmain.getChildren().add(this.title);
+        hoeveelvraag.getChildren().add(this.Hoeveel);
+        left.getChildren().add(hoeveelvraag);
         ToggleGroup group = new ToggleGroup();
         String[] options = {"30","40","50", "60", "70"};
-        left.getChildren().add(hoeveelheid);
         for (String option : options){
             RadioButton rb = new RadioButton(option+"\n");
             rb.setToggleGroup(group);
+            rb.setPadding(new Insets(4,10,4,10));
             left.getChildren().add(rb);
             if (option.equals("50")){
                 rb.setSelected(true);
             }
         };
+        left.getChildren().add(this.progress);
+
+        //Styling
+        selectedfile.getChildren().add(this.filename);
+        right.getChildren().addAll(selectedfile, this.previewLabel);
+        splitmain.getItems().addAll(left, right);
+        buttonsbox.getChildren().addAll(this.inputfile, this.generate, this.naar_beginscherm);
+        mainbox.getChildren().addAll(stackmain, splitmain, buttonsbox);
+
+        mainPane = stylemainPane(mainPane);
+        mainPane.setMargin(mainbox,new Insets(100,150,100,150));
+        styleTitle();
+        mainbox = stylemainBox(mainbox);
+        mainbox.setMargin(splitmain,new Insets(0,50,20,50));
+        mainbox.setMargin(buttonsbox,new Insets(0,50,20,50));
+        styleButton1(this.generate);
+        styleButton1(this.inputfile);
+        styleButton2(this.naar_beginscherm);
+        styleSplitpane(splitmain);
+        stylePane(selectedfile);
+        stylePane(hoeveelvraag);
+        applyLabelPadding(this.previewLabel);
+        applyLabelPadding(this.Hoeveel);
+        applyLabelPadding(this.filename);
+        applyLabelPadding(this.progress);
+
+        //Functional
         FileChooser fileChooser = new FileChooser();
-        Button inputfile = new Button("selecteer bestand");
-
-        Button generate = new Button("genereer toets!");
-
-        left.getChildren().addAll(inputfile, filename, generate, naar_beginscherm);
-
-        /*group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
 
@@ -73,16 +110,12 @@ public class toetsScherm extends Application {
                 System.out.println("Selected Radio Button - "+chk.getText());
 
             }
-        });*/
-
-
-
-        inputfile.setOnAction((ActionEvent event) -> {
+        });
+        this.inputfile.setOnAction((ActionEvent event) -> {
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
-                filename.setText("Geselecteerd: "+file.getName());
-                filename2.setText("Geselecteerd: "+file.getName());
-                String previewString = "Preview:\n";
+                this.filename.setText("Geselecteerd: "+file.getName());
+                String previewString = "";
                 try{
                     Scanner scanner = new Scanner(file);
                     Integer i = 0;
@@ -103,10 +136,8 @@ public class toetsScherm extends Application {
             }
 
         });
-
-        generate.setOnAction((ActionEvent event) -> {
-            Text create_text = new Text("Creating files in progress..");
-            left.getChildren().add(create_text);
+        this.generate.setOnAction((ActionEvent event) -> {
+            this.progress.setText("Bestanden aanmaken...");
             RadioButton chk = (RadioButton)group.getSelectedToggle();
             if (!chk.getText().trim().isEmpty()){
                 System.out.println((chk.getText().trim()));
@@ -119,16 +150,119 @@ public class toetsScherm extends Application {
                     System.out.println(e);
                 }
             }
-            create_text.setText("Finished creating files!");
+            this.progress.setText("Bestanden aangemaakt!");
+
         });
 
-        mainPane.getChildren().addAll(titel,contentholder);
-
-
-
-        Scene main = new Scene(mainPane, 1280,600);
+        Scene main = new Scene(mainPane, 1000,600);
         primaryStage.setScene(main);
         primaryStage.show();
+    }
+
+    private BorderPane stylemainPane(BorderPane mainPane){
+        mainPane.prefHeight(600);
+        mainPane.prefWidth(1000);
+        mainPane.setStyle("-fx-background-color: #9ff9a5;");
+        return mainPane;
+    }
+
+    private void styleTitle(){
+        this.title.setPadding(new Insets(0,0,30,0));
+        this.title.setAlignment(Pos.CENTER);
+        this.title.setContentDisplay(ContentDisplay.CENTER);
+        this.title.setFont(Font.font("open-sans", 36));
+    }
+
+    private VBox stylemainBox(VBox mainbox){
+        mainbox.prefHeight(200);
+        mainbox.prefWidth(100);
+        mainbox.setAlignment(Pos.CENTER);
+        mainbox.setStyle("-fx-background-color: #ffffff;");
+        blur(mainbox);
+        return mainbox;
+    }
+
+    private VBox blur(VBox blurredbox){
+        try {
+            DropShadow dropShadow = new DropShadow();
+            dropShadow.setRadius(10.0);
+            dropShadow.setOffsetX(0);
+            dropShadow.setOffsetY(0);
+            blurredbox.setEffect(dropShadow);
+        }
+        catch (Exception e){
+            System.out.println("cannot apply blur to object.");
+        }
+        return blurredbox;
+    }
+
+    private Button blur(Button blurredbox){
+        try {
+            DropShadow dropShadow = new DropShadow();
+            dropShadow.setRadius(1.0);
+            dropShadow.setOffsetX(0);
+            dropShadow.setOffsetY(0);
+            blurredbox.setEffect(dropShadow);
+        }
+        catch (Exception e){
+            System.out.println("cannot apply blur to object.");
+        }
+        return blurredbox;
+    }
+
+    private StackPane stylestackMain(StackPane stackmain){
+        stackmain.prefHeight(100);
+        stackmain.prefWidth(Region.USE_COMPUTED_SIZE);
+        return stackmain;
+    }
+
+    private Button styleButton1(Button button){
+        button.setPadding(new Insets(8,16,8,16));
+        button.setStyle("-fx-background-color: #66bec1; ");
+        button.setTextFill(Color.WHITE);
+        blur(button);
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-color: #7ce6ea;");
+            button.setCursor(Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-color: #66bec1; ");
+            button.setCursor(Cursor.DEFAULT);
+        });
+        return button;
+    }
+
+    private Button styleButton2(Button button){
+        button.setPadding(new Insets(8,16,8,16));
+        button.setStyle("-fx-background-color: #d34a78; ");
+        button.setTextFill(Color.WHITE);
+        blur(button);
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-color: #f45a8e;");
+            button.setCursor(Cursor.HAND);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-color: #d34a78; ");
+            button.setCursor(Cursor.DEFAULT);
+        });
+        return button;
+    }
+
+    private SplitPane styleSplitpane(SplitPane splitPane){
+        splitPane.setDividerPosition(0,0.6);
+        splitPane.setPrefHeight(220);
+        return splitPane;
+    }
+
+    private Pane stylePane(Pane pane){
+        this.filename.setFont(Font.font("open-sans", 14));
+        this.Hoeveel.setFont(Font.font("open-sans", 14));
+        pane.setStyle("-fx-background-color: #dedede");
+        return pane;
+    }
+
+    private void applyLabelPadding(Label label){
+        label.setPadding(new Insets(4,10,4,10));
     }
 
     public void writeFile(vraag[] vraaglijst, Integer option) throws IOException{
@@ -178,10 +312,6 @@ public class toetsScherm extends Application {
         }
     }
 
-    /**
-     * Empties the input file.
-     * @param file
-     */
     public void clearfile(File file){
         try {
             FileWriter clear = new FileWriter(file, false);
@@ -194,13 +324,4 @@ public class toetsScherm extends Application {
         }
     }
 
-    private VBox buildright(){
-        VBox right = new VBox();
-        HBox filenamebox = new HBox(1);
-        filenamebox.getChildren().add(filename2);
-        HBox contentbox = new HBox();
-        contentbox.getChildren().add(previewLabel);
-        right.getChildren().addAll(filenamebox, contentbox);
-    return right;
-    }
 }
