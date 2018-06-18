@@ -28,7 +28,7 @@ import java.util.Scanner;
 
 public class toetsScherm extends Application {
 
-    String[] namelist;
+    List<String> namelist = new ArrayList<String>();
     Button naar_beginscherm = new Button("Stoppen");
 
     public static void main(String[] args) {
@@ -36,7 +36,7 @@ public class toetsScherm extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage){
         VBox mainPane = new VBox();
         mainPane.setPadding(new Insets(100,300,100,300));
         Text titel = new Text("Genereer toets");
@@ -80,23 +80,20 @@ public class toetsScherm extends Application {
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
                 filename.setText("Geselecteerd: "+file.getName());
-            }
-            try{
-                System.out.println("test");
-                Scanner scanner = new Scanner(file);
-                Integer i = 0;
-                while (scanner.hasNext()){
-                    if (scanner.nextLine().equals("\n")){
-                        this.namelist[i] = (scanner.nextLine().split(" ")[0]);
-                        System.out.println(this.namelist[i]);
+                try{
+                    Scanner scanner = new Scanner(file);
+                    Integer i = 0;
+                    while (scanner.hasNext()){
+                        String line = scanner.nextLine();
+                        this.namelist.add(line.split(" ")[0]);
+                        System.out.println(this.namelist.get(i));
+                        i++;
                     }
-                    i++;
+                }
+                catch (FileNotFoundException e){
+                    System.out.println(e);
                 }
             }
-            catch (FileNotFoundException e){
-                System.out.println(e);
-            }
-
 
         });
 
@@ -108,12 +105,12 @@ public class toetsScherm extends Application {
                 System.out.println((chk.getText().trim()));
                 Integer optie = Integer.parseInt(chk.getText().trim());
                 vraag[] vraaglijst = new vraag[optie];
-                /*try{ //TODO uncomment
-                    //writeFile(vraaglijst, optie);
+                try{
+                    writeFile(vraaglijst, optie);
                 }
                 catch (IOException e){
                     System.out.println(e);
-                }*/
+                }
             }
             create_text.setText("Finished creating files!");
         });
@@ -129,38 +126,50 @@ public class toetsScherm extends Application {
 
     public void writeFile(vraag[] vraaglijst, Integer option) throws IOException{
         String pathway = "C:/Users/julian/IdeaProjects/bstopdracht3/bstopopd/src/";
-        Integer amount = option * this.namelist.length;
-        Integer count = 0;
-        for (String naam : this.namelist){
-            File outfile = new File(pathway+"AAtest_"+naam+".txt");
-            File outfile2 = new File(pathway+"AANT_"+naam+".txt");
-            String format = "";
-            clearfile(outfile);
-            clearfile(outfile2);
-            for (Integer i = 0; i < option; i++) {
-                vraaglijst[i] = new vraag();
-                FileWriter fw = new FileWriter(outfile, true);
-                PrintWriter pw = new PrintWriter(fw);
-                vraaglijst[i].generatequestions();
-                pw.println((i + 1) + ". " + vraaglijst[i].getVraag() + "\n");
-                switch (vraaglijst[i].getOpties().length){
-                    case 3:
-                        format = String.format("A) %s\r\nB) %s\r\nC) %s\r\n", vraaglijst[i].getOpties()[0], vraaglijst[i].getOpties()[1], vraaglijst[i].getOpties()[2]);
-                        pw.println(format);
-                        break;
-                    case 4:
-                        format = String.format("A) %s\r\nB) %s\r\nC) %s\r\nD) %s\r\n", vraaglijst[i].getOpties()[0], vraaglijst[i].getOpties()[1], vraaglijst[i].getOpties()[2], vraaglijst[i].getOpties()[3]);
-                        pw.println(format);
-                        break;
+        File file = new File("").getAbsoluteFile();
+        if (System.getProperty("os.name").split("")[0] == "Windows" ){
+            pathway = (file+"\\bstopopd\\src\\");
+        }
+        else{
+            pathway = (file+"/bstopopd/src/");
+        };
+        if (this.namelist != null){
+            //Integer amount = option * this.namelist.length;
+            Integer count = 0;
+            for (String naam : this.namelist){
+                File outfile = new File(pathway+"AAtest_"+naam+".txt");
+                File outfile2 = new File(pathway+"AANT_"+naam+".txt");
+                String format = "";
+                clearfile(outfile);
+                clearfile(outfile2);
+                for (Integer i = 0; i < option; i++) {
+                    vraaglijst[i] = new vraag();
+                    FileWriter fw = new FileWriter(outfile, true);
+                    PrintWriter pw = new PrintWriter(fw);
+                    vraaglijst[i].generatequestions();
+                    pw.println((i + 1) + ". " + vraaglijst[i].getVraag() + "\n");
+                    switch (vraaglijst[i].getOpties().length){
+                        case 3:
+                            format = String.format("A) %s\r\nB) %s\r\nC) %s\r\n", vraaglijst[i].getOpties()[0], vraaglijst[i].getOpties()[1], vraaglijst[i].getOpties()[2]);
+                            pw.println(format);
+                            break;
+                        case 4:
+                            format = String.format("A) %s\r\nB) %s\r\nC) %s\r\nD) %s\r\n", vraaglijst[i].getOpties()[0], vraaglijst[i].getOpties()[1], vraaglijst[i].getOpties()[2], vraaglijst[i].getOpties()[3]);
+                            pw.println(format);
+                            break;
+                    }
+                    //System.out.println(i.toString()+ vraaglijst[i].getVraag());
+                    pw.close();
+                    FileWriter fw2 = new FileWriter(outfile2, true);
+                    PrintWriter pw2 = new PrintWriter(fw2);
+                    pw2.println(i+1 + vraaglijst[i].getVraag()+".\r\n " +vraaglijst[i].getAntwoord());
+                    pw2.close();
+                    count++;
                 }
-                //System.out.println(i.toString()+ vraaglijst[i].getVraag());
-                pw.close();
-                FileWriter fw2 = new FileWriter(outfile2, true);
-                PrintWriter pw2 = new PrintWriter(fw2);
-                pw2.println(i+1 + vraaglijst[i].getVraag()+".\r\n " +vraaglijst[i].getAntwoord());
-                pw2.close();
-                count++;
             }
+        }
+        else {
+            System.out.println("this.namelist = null line 167 toetsscherm.java");
         }
     }
 
