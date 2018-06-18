@@ -20,6 +20,7 @@ public class Main extends Application {
         startscherm.quit.setOnAction(event -> {startscherm.close(primaryStage);});
         optiescherm.naar_beginscherm.setOnAction(event -> startscherm.start(primaryStage));
         toetsscherm.naar_beginscherm.setOnAction(event -> startscherm.start(primaryStage));
+        toetsscherm.afsluiten.setOnAction(event -> toetsscherm.close(primaryStage));
         startscherm.start(primaryStage);
     }
 

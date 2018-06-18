@@ -34,6 +34,7 @@ public class toetsScherm extends Application {
 
     List<String> namelist = new ArrayList<String>();
     Button naar_beginscherm = new Button("Naar beginscherm");
+    Button afsluiten = new Button("Afsluiten");
     Label filename = new Label("Geselecteerd bestand: ");
     Label previewLabel = new Label("Geen bestand geselecteerd.");
     Label title = new Label("Genereer toetsen");
@@ -80,7 +81,7 @@ public class toetsScherm extends Application {
         selectedfile.getChildren().add(this.filename);
         right.getChildren().addAll(selectedfile, this.previewLabel);
         splitmain.getItems().addAll(left, right);
-        buttonsbox.getChildren().addAll(this.inputfile, this.generate, this.naar_beginscherm);
+        buttonsbox.getChildren().addAll(this.inputfile, this.generate, this.naar_beginscherm, this.afsluiten);
         mainbox.getChildren().addAll(stackmain, splitmain, buttonsbox);
 
         mainPane = stylemainPane(mainPane);
@@ -92,6 +93,7 @@ public class toetsScherm extends Application {
         styleButton1(this.generate);
         styleButton1(this.inputfile);
         styleButton2(this.naar_beginscherm);
+        styleButton2(this.afsluiten);
         styleSplitpane(splitmain);
         stylePane(selectedfile);
         stylePane(hoeveelvraag);
@@ -328,6 +330,10 @@ public class toetsScherm extends Application {
         catch (IOException e){
             System.out.println(e + "clearfile() Toetscherm.java");
         }
+    }
+
+    public void close(Stage primaryStage){
+        primaryStage.close();
     }
 
 }
