@@ -6,10 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -17,6 +14,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.LabelUI;
+import javax.swing.plaf.PanelUI;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,6 +29,9 @@ public class toetsScherm extends Application {
 
     List<String> namelist = new ArrayList<String>();
     Button naar_beginscherm = new Button("Stoppen");
+    Label filename = new Label("Geselecteerd: ");
+    Label filename2 = new Label("Geselecteerd: ");
+    Label previewLabel = new Label("");
 
     public static void main(String[] args) {
         launch(args);
@@ -42,7 +44,7 @@ public class toetsScherm extends Application {
         Text titel = new Text("Genereer toets");
         HBox contentholder = new HBox();
         VBox left = new VBox();
-        contentholder.getChildren().addAll(left);
+        contentholder.getChildren().addAll(left, buildright());
         Text hoeveelheid = new Text("Hoeveel vragen:\n");
 
         ToggleGroup group = new ToggleGroup();
@@ -58,7 +60,6 @@ public class toetsScherm extends Application {
         };
         FileChooser fileChooser = new FileChooser();
         Button inputfile = new Button("selecteer bestand");
-        Text filename = new Text();
 
         Button generate = new Button("genereer toets!");
 
@@ -80,6 +81,8 @@ public class toetsScherm extends Application {
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
                 filename.setText("Geselecteerd: "+file.getName());
+                filename2.setText("Geselecteerd: "+file.getName());
+                String previewString = "Preview:\n";
                 try{
                     Scanner scanner = new Scanner(file);
                     Integer i = 0;
@@ -87,12 +90,16 @@ public class toetsScherm extends Application {
                         String line = scanner.nextLine();
                         this.namelist.add(line.split(" ")[0]);
                         System.out.println(this.namelist.get(i));
+                        if (i <= 9){
+                            previewString = previewString + line+ "\n";
+                        }
                         i++;
                     }
                 }
                 catch (FileNotFoundException e){
                     System.out.println(e);
                 }
+                this.previewLabel.setText(previewString);
             }
 
         });
@@ -185,5 +192,15 @@ public class toetsScherm extends Application {
         catch (IOException e){
             System.out.println(e + "clearfile() Toetscherm.java");
         }
+    }
+
+    private VBox buildright(){
+        VBox right = new VBox();
+        HBox filenamebox = new HBox(1);
+        filenamebox.getChildren().add(filename2);
+        HBox contentbox = new HBox();
+        contentbox.getChildren().add(previewLabel);
+        right.getChildren().addAll(filenamebox, contentbox);
+    return right;
     }
 }
