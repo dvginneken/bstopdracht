@@ -112,6 +112,7 @@ public class toetsScherm extends Application {
             }
         });
         this.inputfile.setOnAction((ActionEvent event) -> {
+            this.namelist.clear();
             File file = fileChooser.showOpenDialog(primaryStage);
             if (file != null) {
                 this.filename.setText("Geselecteerd: "+file.getName());
@@ -150,7 +151,12 @@ public class toetsScherm extends Application {
                     System.out.println(e);
                 }
             }
-            this.progress.setText("Bestanden aangemaakt!");
+            if (!this.namelist.isEmpty()) {
+                this.progress.setText("Bestanden aangemaakt!");
+            }
+            else {
+                this.progress.setText("Kies eerst een bestand.");
+            }
 
         });
 
