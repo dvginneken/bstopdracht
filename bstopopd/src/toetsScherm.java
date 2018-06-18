@@ -42,6 +42,7 @@ public class toetsScherm extends Application {
     Button inputfile = new Button("selecteer bestand");
     Button generate = new Button("genereer toetsbestanden");
     Label progress = new Label("");
+    ToggleGroup group = new ToggleGroup();
 
     public static void main(String[] args) {
         launch(args);
@@ -64,11 +65,10 @@ public class toetsScherm extends Application {
         stackmain.getChildren().add(this.title);
         hoeveelvraag.getChildren().add(this.Hoeveel);
         left.getChildren().add(hoeveelvraag);
-        ToggleGroup group = new ToggleGroup();
         String[] options = {"30","40","50", "60", "70"};
         for (String option : options){
             RadioButton rb = new RadioButton(option+"\n");
-            rb.setToggleGroup(group);
+            rb.setToggleGroup(this.group);
             rb.setPadding(new Insets(4,10,4,10));
             left.getChildren().add(rb);
             if (option.equals("50")){
@@ -159,7 +159,6 @@ public class toetsScherm extends Application {
             else {
                 this.progress.setText("Kies eerst een bestand.");
             }
-
         });
 
         Scene main = new Scene(mainPane, 1000,600);
@@ -334,6 +333,12 @@ public class toetsScherm extends Application {
 
     public void close(Stage primaryStage){
         primaryStage.close();
+    }
+
+    public void resetwindow(){
+        this.previewLabel.setText("Geen bestand geselecteerd.");
+        this.filename.setText("Geselecteerd bestand: ");
+        this.namelist.clear();
     }
 
 }
