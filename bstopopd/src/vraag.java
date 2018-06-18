@@ -169,14 +169,14 @@ public class vraag {
      */
     public String answertype(String type , amminozuur aminozuur){
         System.out.println(type);
-        switch (type){
+        switch (type.trim()){
             case "r":
                 return aminozuur.getRandomValue();
             case "1-lettercode":
                 return  ""+aminozuur.getOnel();
             case "3-lettercode":
                 return aminozuur.getThreel();
-            case "Volledige naam":
+            case "Volledige_naam":
                 return aminozuur.getNaam();
             case "Hydrofobiciteit":
                 return aminozuur.getHybrofobe();
@@ -189,7 +189,7 @@ public class vraag {
             case "Structuur":
                 return aminozuur.getSidechain();
         }
-        return "Failed to recognise answertype value (Line 168 vraag.java)";
+        return "Failed to recognise answertype value (Line 192 vraag.java) type:" + type;
     };
 
 
@@ -787,7 +787,13 @@ public class vraag {
         return aminozuurlist;
     }
 
-
+    /*public static void main(String[] args) {
+        vraag[] vragen = new vraag[20];
+        for (Integer i = 0; i < 40; i++){
+            vragen[i] = new vraag("Hydro", "eenletter");
+            vragen[i].generatequestions();
+        }
+    }*/
 
         /*public static void main(String[] args) {
         vraag[] vragen = new vraag[40];

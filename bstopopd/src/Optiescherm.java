@@ -2,11 +2,15 @@ package src;
 
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Optiescherm extends Application {
@@ -15,13 +19,12 @@ public class Optiescherm extends Application {
     Button naar_speelscherm = new Button("Naar speelscherm");
     Instellingen inst = new Instellingen();
     Speelscherm speelscherm = new Speelscherm(inst);
-
     //TODO: afsluiten knop
 
     @Override
     public void start(Stage primaryStage) {
         Pane pane = new Pane();
-        Scene scene = new Scene(pane, 1300, 800);
+        Scene scene = new Scene(pane, 1300, 700);
         primaryStage.setTitle("Optiescherm");
 
         //Dit stukje maakt een invoerbalk voor je naam (tekst) en een error label (label_event) mocht je je naam niet
@@ -53,7 +56,7 @@ public class Optiescherm extends Application {
         //Dit deel maakt radiobuttons waarin je voor het soort vragen kan kiezen en een errorlabel (errorlabel_v) voor
         // als je niks aanklikt
         Label errorlabel_v = new Label();
-        String[] opties = {"Volledige naam","1-lettercode","3-lettercode","Hydrofobiciteit","Lading","Grootte",
+        String[] opties = {"Volledige_naam","1-lettercode","3-lettercode","Hydrofobiciteit","Lading","Grootte",
                 "3D-voorkeur","Structuur"};
         Label vraaglabel = new Label("Soort vragen: ");
         VBox vboxvragen = new VBox(10);
@@ -79,7 +82,7 @@ public class Optiescherm extends Application {
             vboxantwoorden.getChildren().add(rb3);
         }
         vboxantwoorden.getChildren().add(errorlabel_a);
-        HBox hboxsoorten = new HBox(20, vboxvragen, vboxantwoorden);
+        HBox hboxsoorten = new HBox(5, vboxvragen, vboxantwoorden);
 
         /**Dit stukje maakt radiobuttons om de hoeveelheid seconden te kiezen. De zichtbaarheid staat op false omdat hij
         // pas zichtbaar wordt als bij tijd "ja"is aangeklikt */
@@ -100,7 +103,7 @@ public class Optiescherm extends Application {
 
         /**Dit deel maakt radiobutton voor wel of niet met tijd werken en een errorlabel (errorlabel_tijd)*/
         Label errorlabel_tijd = new Label();
-        VBox vboxtijd = new VBox(10);
+        VBox vboxtijd = new VBox(0);
         Label tijdlabel = new Label("Wil je met tijd werken?");
         final ToggleGroup toggletijd = new ToggleGroup();
         RadioButton ja = new RadioButton("Ja");
@@ -138,9 +141,10 @@ public class Optiescherm extends Application {
         //  - als dit allemaal goed was ingevuld wordt het speelscherm aangeroepen
         //  - hier komen nog wat else statements waarbij de errorlabels zichtbaar gemaakt worden als er niks is ingevuld
          */
-        VBox eindbox = new VBox(20, hboxnaam, vboxhoeveelheid, hboxsoorten, vboxtijd, hboxknoppen);
+        VBox eindbox = new VBox(10, hboxnaam, vboxhoeveelheid, hboxsoorten, vboxtijd, hboxknoppen);
         pane.getChildren().addAll(eindbox);
         primaryStage.setScene(scene);
+
         this.naar_speelscherm.setOnAction(event -> {
             if ((tekst.getText() != null && ! tekst.getText().isEmpty())){
                 inst.setNaam(tekst.getText());
@@ -179,6 +183,7 @@ public class Optiescherm extends Application {
                     label_event.setText("Je moet je naam invullen.");
             }
         });
+
         primaryStage.show();
     }
 }
