@@ -85,14 +85,14 @@ public class toetsScherm extends Application {
         mainbox.getChildren().addAll(stackmain, splitmain, buttonsbox);
 
         mainPane = stylemainPane(mainPane);
-        mainPane.setMargin(mainbox,new Insets(100,150,100,150));
+        mainPane.setMargin(mainbox,new Insets(50,150,100,150));
         styleTitle();
         mainbox = stylemainBox(mainbox);
         mainbox.setMargin(splitmain,new Insets(0,50,20,50));
         mainbox.setMargin(buttonsbox,new Insets(0,50,20,50));
         styleButton1(this.generate);
         styleButton1(this.inputfile);
-        styleButton2(this.naar_beginscherm);
+        styleButton1(this.naar_beginscherm);
         styleButton2(this.afsluiten);
         styleSplitpane(splitmain);
         stylePane(selectedfile);

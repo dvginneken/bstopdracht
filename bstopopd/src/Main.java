@@ -24,6 +24,7 @@ public class Main extends Application {
             toetsscherm.resetwindow();
         });
         toetsscherm.afsluiten.setOnAction(event -> toetsscherm.close(primaryStage));
+        optiescherm.afsluiten.setOnAction(event -> optiescherm.close(primaryStage));
         startscherm.start(primaryStage);
     }
 
