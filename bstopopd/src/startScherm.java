@@ -55,6 +55,9 @@ public class startScherm extends Application {
         primaryStage.show();
     }
 
+
+
+
     private BorderPane stylemainPane(BorderPane mainPane){
         mainPane.prefHeight(600);
         mainPane.prefWidth(1000);
