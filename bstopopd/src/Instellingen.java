@@ -48,7 +48,8 @@ public class Instellingen {
         this.hoeveelheid = hoeveelheid;
     }
 
-    public String getHoeveelheid() {
+    public Integer getHoeveelheid() {
+        int hoeveelheid = Integer.parseInt(this.hoeveelheid.trim());
         return hoeveelheid;
     }
 

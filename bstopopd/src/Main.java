@@ -10,7 +10,6 @@ public class Main extends Application {
     Optiescherm optiescherm = new Optiescherm();
     startScherm startscherm = new startScherm();
     toetsScherm toetsscherm = new toetsScherm();
-    //Speelscherm speelscherm = new Speelscherm();
 
 
 
