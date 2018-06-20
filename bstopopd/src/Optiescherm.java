@@ -25,6 +25,7 @@ public class Optiescherm extends Application {
     Speelscherm speelscherm = new Speelscherm(inst);
     Label title = new Label("Instellingen");
     TextField tekst = new TextField();
+    Label label_event = new Label("");
 
     @Override
     public void start(Stage primaryStage) {
@@ -40,16 +41,13 @@ public class Optiescherm extends Application {
         HBox time2 = new HBox(10);
         HBox buttonscontrol = new HBox(10);
         Label label_naam = new Label("Naam: ");
-        Label label_event = new Label("");
+
         HBox hboxnaam = new HBox(10);
         Label hoeveellabel = new Label("Hoeveel vragen: ");
-        Label errorlabel_v = new Label();
         Label vraaglabel = new Label("Soort vragen: ");
-        Label errorlabel_a = new Label();
         Label antwoordlabel = new Label("Soort antwoorden: ");
         Label secondenlabel = new Label("Hoeveel seconden: ");
         Label tijdlabel = new Label("Wil je met tijd werken?");
-        Label errorlabel_tijd = new Label();
 
         mainPane.setCenter(mainbox);
         questionbox.getChildren().addAll(Questiontypes, Answertypes);
@@ -163,35 +161,35 @@ public class Optiescherm extends Application {
                 String hoeveelheidkeuze = chk_h.getText();
                 inst.setHoeveelheid(hoeveelheidkeuze);
                 RadioButton chk_sv = (RadioButton)soortvragen.getSelectedToggle();
-                String vraagkeuze = chk_sv.getText();
                 if ((chk_sv != null)){
+                    String vraagkeuze = chk_sv.getText();
                     inst.setSoort_vragen(vraagkeuze);
                     RadioButton chk_sa = (RadioButton)soortantwoorden.getSelectedToggle();
-                    String antwoordkeuze = chk_sa.getText();
                     if ((chk_sa != null)){
+                        String antwoordkeuze = chk_sa.getText();
                         inst.setSoort_antwoorden(antwoordkeuze);
                         RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
-                        String tijdkeuze = chk_tijd.getText();
                         if((vraagkeuze.equals(antwoordkeuze))){
-                            errorlabel_v.setText("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
+                            setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
                         }else
                             if ((chk_tijd != null)){
+                                String tijdkeuze = chk_tijd.getText();
                                 inst.setTijd(tijdkeuze);
                                 RadioButton chk_sec = (RadioButton)tijdgroep.getSelectedToggle();
                                 String sec_keuze = chk_sec.getText();
                                 inst.setSeconden(sec_keuze);
                                 this.speelscherm.start(primaryStage);
                             }else{
-                                errorlabel_tijd.setText("Je moet kiezen of je wel of niet met tijd wilt spelen.");
+                                setLabelevent("Je moet kiezen of je wel of niet met tijd wilt spelen.");
                             }
                         }else{
-                            errorlabel_a.setText("Je moet een soort antwoord selecteren.");
+                            setLabelevent("Je moet een soort antwoord selecteren.");
                         }
                     }else{
-                        errorlabel_v.setText("Je moet een soort vraag selecteren.");
+                        setLabelevent("Je moet een soort vraag selecteren.");
                     }
                 }else{
-                    label_event.setText("Je moet je naam invullen.");
+                    setLabelevent("Je moet je naam invullen.");
             }
         });
 
@@ -199,6 +197,10 @@ public class Optiescherm extends Application {
         primaryStage.setScene(main);
         primaryStage.show();
         primaryStage.setTitle("Optiescherm");
+    }
+
+    private void setLabelevent(String text){
+        this.label_event.setText(text);
     }
 
     private BorderPane stylemainPane(BorderPane mainPane){
