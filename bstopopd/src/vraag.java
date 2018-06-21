@@ -209,7 +209,7 @@ public class vraag {
         String[] antwoordenset1 = {""+aminozuur.getOnel(), aminozuur.getThreel(), aminozuur.getHybrofobe(),
                 aminozuur.getCharge(), aminozuur.getGrootte(), aminozuur.getThreed(), aminozuur.getSidechain()};
         Integer rng =  rand.nextInt(7);
-
+        rng = typequestionCheck(rng);
         this.vraag = String.format(vragenset1[rng], aminozuur.getNaam());
         this.antwoord = antwoordenset1[rng];
         amminozuur acid2 = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -239,6 +239,7 @@ public class vraag {
         String[] antwoordenset1 = {""+aminozuur.getNaam(), aminozuur.getThreel(), aminozuur.getHybrofobe(),
                 aminozuur.getCharge(), aminozuur.getGrootte(), aminozuur.getThreed(), aminozuur.getSidechain()};
         Integer rng =  rand.nextInt(7);
+        rng = typequestionCheck(rng);
         this.vraag = String.format(vragenset1[rng], aminozuur.getOnel());
         this.antwoord = antwoordenset1[rng];
         amminozuur acid2 = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -249,9 +250,6 @@ public class vraag {
         }
         if (rng == 0){
             rng = 7;
-        }
-        if(this.typequestion.equals("1-lettercode") && rng == 1){
-
         }
         this.opties = getAnswerset(rng, aminozuur, acid2, acid3);
     }
@@ -274,7 +272,7 @@ public class vraag {
         String[] antwoordenset1 = {""+aminozuur.getOnel(), aminozuur.getNaam(), aminozuur.getHybrofobe(),
                 aminozuur.getCharge(), aminozuur.getGrootte(), aminozuur.getThreed(), aminozuur.getSidechain()};
         Integer rng =  rand.nextInt(7);
-
+        rng = typequestionCheck(rng);
         this.vraag = String.format(vragenset1[rng], aminozuur.getThreel());
         this.antwoord = antwoordenset1[rng];
         amminozuur acid2 = this.aminozuren[rand.nextInt(this.hoeveelaminozuur)];
@@ -405,7 +403,7 @@ public class vraag {
             List<String> strList = Arrays.asList(answers);
             Collections.shuffle(strList);
             this.opties = strList.toArray(new String[strList.size()]);
-            this.vraag = String.format("Wat is de hydrofobiciteit van %s", answertype(this.typequestion, aminozuur));
+            this.vraag = String.format("Wat is de hydrofobiciteit van %s", answertype(this.typeanswer, aminozuur));
             this.antwoord = aminozuur.getHybrofobe();
         }
     }
@@ -689,9 +687,35 @@ public class vraag {
      */
     public void generatequestions(){
         Random rand = new Random();
-        int type = rand.nextInt(7);
-
-        type = typequestionCheck(type);
+        int type = rand.nextInt(7);;
+        if (!this.typequestion.isEmpty()){
+            switch (this.typequestion.trim()){
+                case "1-lettercode":
+                    type = 0;
+                    break;
+                case "3-lettercode":
+                    type = 1;
+                    break;
+                case "Volledige_naam":
+                    type = 2;
+                    break;
+                case "Hydrofobiciteit":
+                    type = 3;
+                    break;
+                case "Lading":
+                    type= 4;
+                    break;
+                case "Grootte":
+                    type = 5;
+                    break;
+                case "3D-voorkeur":
+                    type = 6;
+                    break;
+                case "Structuur":
+                    type = 6; //TODO structuur toevoegen
+                    break;
+            }
+        }
         switch (type){
             case 0:
                 onelQuestions();
@@ -715,7 +739,7 @@ public class vraag {
                 threedQuestions();
                 break;
             case 7:
-                sidechainQuestions();
+//                sidechainQuestions();
                 break;
         }
     }
@@ -729,23 +753,44 @@ public class vraag {
      */
     public int typequestionCheck(Integer type){
         Random rand = new Random();
-        type = rand.nextInt(7);
-        switch (this.typequestion){
+        switch (this.typequestion.trim()){
             case "1-lettercode":
-                while (type == 1 || type == 2){
-                    type = rand.nextInt(7);
+                if (type == 0 && this.typeanswer.trim().equals("3-lettercode")) {
+                    System.out.println("in de 0");
+                    while (type == 0) {
+                        type = rand.nextInt(7);
+                    }
                 }
-                break;
+                else if (type == 1 && this.typeanswer.trim().equals("volledige_naam")){
+                    while (type == 1){
+                        type = rand.nextInt(7);
+                    }
+                }
+                return type;
             case "3-lettercode":
-                while (type == 0 || type == 2){
-                    type = rand.nextInt(7);
+                if (type == 0 && this.typeanswer.trim().equals("volledige_naam")) {
+                    while (type == 0) {
+                        type = rand.nextInt(7);
+                    }
                 }
-                break;
-            case "Volledige naam":
-                while (type == 1 || type == 0){
-                    type = rand.nextInt(7);
+                else if (type == 1 && this.typeanswer.trim().equals("1-lettercode")){
+                    while (type == 1){
+                        type = rand.nextInt(7);
+                    }
                 }
-                break;
+                return type;
+            case "Volledige_naam":
+                if (type == 0 && this.typeanswer.trim().equals("3-lettercode")) {
+                    while (type == 0) {
+                        type = rand.nextInt(7);
+                    }
+                }
+                else if (type == 1 && this.typeanswer.trim().equals("1-lettercode")){
+                    while (type == 1){
+                        type = rand.nextInt(7);
+                    }
+                }
+                return type;
         }
         return type;
     }
