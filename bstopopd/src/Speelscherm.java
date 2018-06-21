@@ -28,14 +28,14 @@ public class Speelscherm extends Application {
     VBox buttons =  new VBox(10);
     int index = 0;
 
-    //private Integer aantal;
-    private String vraag;
-    private String[] opties;
-    private String antwoord;
-    private amminozuur[] aminozuren = lijst_aminozuur();
-    private Integer hoeveelaminozuur;
-    private String typeanswer = "r";
-    private String typequestion = "r";
+//    //private Integer aantal;
+//    private String vraag;
+//    private String[] opties;
+//    private String antwoord;
+//    private amminozuur[] aminozuren = lijst_aminozuur();
+//    private Integer hoeveelaminozuur;
+//    private String typeanswer = "r";
+//    private String typequestion = "r";
 
     public static void main(String[] args) {
         launch(args);
@@ -55,7 +55,7 @@ public class Speelscherm extends Application {
         Text opening = new Text("Hoi " + this.instellingen.getNaam());
         opening.setFont(Font.font("open-sans", 25));
 
-        naar_beginscherm.setOnAction(event ->{
+        this.naar_beginscherm.setOnAction(event ->{
             startscherm.start(primaryStage);
         });
 
@@ -94,60 +94,60 @@ public class Speelscherm extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-    private void doTime(){
-        // Timeline, is een animatie van keyframes, wordt aangeroepen  (de frames worden stapgewijs bijgehouden)
-        // https://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html
-        Timeline time = new Timeline();
-        // de setCycleCount zorgt voor het aantal cycli. INDEFINITE zorgt ervoor dat het altijd doorgaat
-        time.setCycleCount(Timeline.INDEFINITE);
-        // Hier wordt gecheckt of de aantal niet gelijk is aan null, als dat het geval is , dan stopt de animatie
-        if (time != null){
-            time.stop();
-        }
-        // De frame wordt hier gedefinieerd. Met een 1 seconde frame.
-        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            // De handle methode wordt overschreven
-            @Override
-            public void handle(ActionEvent event){
-                newmethod(time);
-            }
-
-
-        });
-        // haalt de keyframe van de animatie op en voegt deze toe
-        time.getKeyFrames().add(frame);
-        // Speelt de animatie vanuit de initiele positie. Moet gebruikt worden, anders wordt niets getoond
-        time.playFromStart();
-
-    }
-
-    private void newmethod(Timeline time){
-        // 1 van het aantal seconden afhalen
-        seconds--;
-        // Wijzig de text van label1
-        label1.setText("Countdown: "+seconds.toString());
-        System.out.println(seconds+" "+Math.floor(seconds/60.0));
-        // als de seconden <= 0
-        if (seconds <= 0) {
-            // de frameanimatie wordt gestopt
-            time.stop();
-            // een pop-up wordt aangeroepen
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            // De tekst van de pop-up
-            alert.setHeaderText("Count down reset to 0!");
-            // De pop-up wordt getoond
-            alert.show();
-            // Wijzig de text van label1
-
-            label1.setText("Countdown is op 0 nu");
-            label2.setText("Gewijzigd");
-            label2.setFont(Font.font(200));
-
-
-
-        }
-
-    }
+//    private void doTime(){
+//        // Timeline, is een animatie van keyframes, wordt aangeroepen  (de frames worden stapgewijs bijgehouden)
+//        // https://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html
+//        Timeline time = new Timeline();
+//        // de setCycleCount zorgt voor het aantal cycli. INDEFINITE zorgt ervoor dat het altijd doorgaat
+//        time.setCycleCount(Timeline.INDEFINITE);
+//        // Hier wordt gecheckt of de aantal niet gelijk is aan null, als dat het geval is , dan stopt de animatie
+//        if (time != null){
+//            time.stop();
+//        }
+//        // De frame wordt hier gedefinieerd. Met een 1 seconde frame.
+//        KeyFrame frame = new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+//            // De handle methode wordt overschreven
+//            @Override
+//            public void handle(ActionEvent event){
+//                newmethod(time);
+//            }
+//
+//
+//        });
+//        // haalt de keyframe van de animatie op en voegt deze toe
+//        time.getKeyFrames().add(frame);
+//        // Speelt de animatie vanuit de initiele positie. Moet gebruikt worden, anders wordt niets getoond
+//        time.playFromStart();
+//
+//    }
+//
+//    private void newmethod(Timeline time){
+//        // 1 van het aantal seconden afhalen
+//        seconds--;
+//        // Wijzig de text van label1
+//        label1.setText("Countdown: "+seconds.toString());
+//        System.out.println(seconds+" "+Math.floor(seconds/60.0));
+//        // als de seconden <= 0
+//        if (seconds <= 0) {
+//            // de frameanimatie wordt gestopt
+//            time.stop();
+//            // een pop-up wordt aangeroepen
+//            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//            // De tekst van de pop-up
+//            alert.setHeaderText("Count down reset to 0!");
+//            // De pop-up wordt getoond
+//            alert.show();
+//            // Wijzig de text van label1
+//
+//            label1.setText("Countdown is op 0 nu");
+//            label2.setText("Gewijzigd");
+//            label2.setFont(Font.font(200));
+//
+//
+//
+//        }
+//
+//    }
 
     }
     private void update(vraag vraag){
