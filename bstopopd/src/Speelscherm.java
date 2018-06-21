@@ -29,10 +29,9 @@ public class Speelscherm extends Application {
     Label vraag_label = new Label();
     VBox buttons =  new VBox(10);
     int index = 0;
-    private final Integer startTime = 10;
+    private final Integer startTime = 3;
     private Integer seconds = startTime;
     private Label label1;
-    private Label label2;
 
     public static void main(String[] args) {
         launch(args);
@@ -103,8 +102,10 @@ public class Speelscherm extends Application {
             // Voeg de layout aan de groep
             root.getChildren().add(layout);
             // Ga naar de methode doTime
-            this.starten.setOnAction(event -> {
-                update_timer(vraaglijst[index]);
+            vraaglijst[index] = new vraag(sv, sa);
+            vraaglijst[index].generatequestions();
+            this.starten.setOnAction(event -> {;
+                update_timer(vraaglijst[index], vraaglijst);
             });
             eindbox.getChildren().add(root);
         }
@@ -115,7 +116,7 @@ public class Speelscherm extends Application {
         primaryStage.show();
     }
 
-    private void doTime(vraag vraag){
+    private void doTime(vraag vraag, vraag[] vraaglijst){
         // Timeline, is een animatie van keyframes, wordt aangeroepen  (de frames worden stapgewijs bijgehouden)
         // https://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html
         Timeline time = new Timeline();
@@ -130,7 +131,9 @@ public class Speelscherm extends Application {
             // De handle methode wordt overschreven
             @Override
             public void handle(ActionEvent event){
-                newmethod(time, vraag);
+                System.out.println(vraag);
+                System.out.println(vraaglijst);
+                newmethod(time, vraag, vraaglijst);
             }
 
 
@@ -142,7 +145,7 @@ public class Speelscherm extends Application {
 
     }
 
-    private void newmethod(Timeline time, vraag vraag){
+    private void newmethod(Timeline time, vraag vraag, vraag[] vraaglijst){
         // 1 van het aantal seconden afhalen
         seconds--;
         // Wijzig de text van label1
@@ -152,9 +155,8 @@ public class Speelscherm extends Application {
         if (seconds <= 0) {
             // de frameanimatie wordt gestopt
             time.stop();
-            update(vraag);
             label1.setText("Countdown is op 0 nu");
-
+            next(vraaglijst);
 
 
         }
@@ -162,17 +164,17 @@ public class Speelscherm extends Application {
     }
 
     private void update(vraag vraag){
+        //TODO: NullpointerException vraag.getvraag()
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         buttons = buttonbox(vraag);
     }
 
-    private void update_timer(vraag vraag){
-        System.out.println(vraag.getVraag());
+    private void update_timer(vraag vraag, vraag[] vraaglijst){
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         buttons = buttonbox(vraag);
-        doTime(vraag);
+        doTime(vraag, vraaglijst);
     }
 
     private VBox buttonbox(vraag vraag){
@@ -185,8 +187,8 @@ public class Speelscherm extends Application {
         return buttons;
     }
     private void next(vraag[] vraaglijst){
-        index += 1;
-        update(vraaglijst[index]);
+        this.index += 1;
+        update(vraaglijst[this.index]);
     }
     private void previous(vraag[] vraaglijst){
         index -= 1;
