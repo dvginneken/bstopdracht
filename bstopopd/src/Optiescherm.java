@@ -125,7 +125,7 @@ public class Optiescherm extends Application {
         /**Dit deel maakt radiobutton voor wel of niet met tijd werken en een errorlabel (errorlabel_tijd)*/
         ToggleGroup toggletijd = new ToggleGroup();
         RadioButton ja = new RadioButton("Ja");
-        RadioButton nee = new RadioButton("nee");
+        RadioButton nee = new RadioButton("Nee");
         ja.setToggleGroup(toggletijd);
         nee.setToggleGroup(toggletijd);
         ja.setOnAction(event -> {
