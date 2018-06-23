@@ -17,6 +17,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Optiescherm extends Application {
     Button naar_beginscherm = new Button("Naar beginscherm");
     Button afsluiten = new Button("Afsluiten");
@@ -95,20 +99,24 @@ public class Optiescherm extends Application {
         String[] opties = {"Volledige_naam","1-lettercode","3-lettercode","Hydrofobiciteit","Lading","Grootte",
                 "3D-voorkeur","Structuur"};
 
-        ToggleGroup soortvragen = new ToggleGroup();
-        for (String optie2 : opties){
-            RadioButton rb2 = new RadioButton(optie2+"\n");
-            rb2.setToggleGroup(soortvragen);
-            Questiontypes.getChildren().add(rb2);
+        CheckBox[] cb1 = new CheckBox[opties.length];
+        for (int i = 0; i < opties.length; i++) {
+            cb1[i] = new CheckBox(opties[i]);
+            Questiontypes.getChildren().add(cb1[i]);
         }
         /**Dit deel maakt radiobuttons waarin je voor het soort antwoorden kan kiezen en een errorlabel (errorlabel_a)
          * voor als je niks aanklikt */
-        ToggleGroup soortantwoorden = new ToggleGroup();
+        CheckBox[] cb2 = new CheckBox[opties.length];
+        for (int i = 0; i < opties.length; i++) {
+            cb2[i] = new CheckBox(opties[i]);
+            Answertypes.getChildren().add(cb2[i]);
+        }
+        /*ToggleGroup soortantwoorden = new ToggleGroup();
         for (String optie3 : opties){
             RadioButton rb3 = new RadioButton(optie3+"\n");
             rb3.setToggleGroup(soortantwoorden);
             Answertypes.getChildren().add(rb3);
-        }
+        }*/
         /**Dit stukje maakt radiobuttons om de hoeveelheid seconden te kiezen. De zichtbaarheid staat op false omdat hij
          // pas zichtbaar wordt als bij tijd "ja"is aangeklikt */
         String[] tijden = {"5", "10", "15", "20"};
@@ -160,16 +168,27 @@ public class Optiescherm extends Application {
                 RadioButton chk_h = (RadioButton)group.getSelectedToggle();
                 String hoeveelheidkeuze = chk_h.getText();
                 inst.setHoeveelheid(hoeveelheidkeuze);
-                RadioButton chk_sv = (RadioButton)soortvragen.getSelectedToggle();
+                //RadioButton chk_sv = (RadioButton)soortvragen.getSelectedToggle();
+                List<String> chk_sv = new ArrayList<>();
+                for (Integer i = 0; i < cb1.length; i++){
+                    if(cb1[i].isSelected()){
+                        chk_sv.add(opties[i]);
+                    }
+                }
                 if ((chk_sv != null)){
-                    String vraagkeuze = chk_sv.getText();
-                    inst.setSoort_vragen(vraagkeuze);
-                    RadioButton chk_sa = (RadioButton)soortantwoorden.getSelectedToggle();
+                    inst.setSoort_vragen(chk_sv);
+                    List<String> chk_sa = new ArrayList<>();
+                    for (Integer i = 0; i < cb2.length; i++){
+                        if(cb2[i].isSelected()){
+                            chk_sa.add(opties[i]);
+                        }
+                    }
                     if ((chk_sa != null)){
-                        String antwoordkeuze = chk_sa.getText();
-                        inst.setSoort_antwoorden(antwoordkeuze);
+                        inst.setSoort_antwoorden(chk_sa);
                         RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
-                        if((vraagkeuze.equals(antwoordkeuze))){
+                        String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur", "Structuur"};
+                        if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv)) ||
+                                (chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list))){
                             setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
                         }else
                             if ((chk_tijd != null)){
@@ -299,6 +318,22 @@ public class Optiescherm extends Application {
 
     public void close(Stage primaryStage){
         primaryStage.close();
+    }
+
+    private Boolean inlist(String[] string, String[] stringlist) {
+        Boolean value = false;
+        Integer match = 0;
+        for (String item : stringlist) {
+            for (Integer i = 0; i < string.length; i++) {
+                if (item.equals(string[i])) {
+                    match += 1;
+                }
+            }
+        }
+        if (match >= 2) {
+            value = true;
+        }
+        return value;
     }
 
 };

@@ -2,11 +2,13 @@ package src;
 
 //Deze klasse slaat alles op wat is aangeklikt/ingevuld bij het optiescherm. Overal is een get en set functie van.
 
+import java.util.List;
+
 public class Instellingen {
     private String naam;
     private String hoeveelheid;
-    private String soort_vragen;
-    private String soort_antwoorden;
+    private List<String> soort_vragen;
+    private List<String> soort_antwoorden;
     private String tijd;
     private String seconden;
 
@@ -26,20 +28,20 @@ public class Instellingen {
         this.tijd = tijd;
     }
 
-    public String getSoort_antwoorden() {
+    public List<String> getSoort_antwoorden() {
         return soort_antwoorden;
     }
 
-    public void setSoort_antwoorden(String soort_antwoorden) {
+    public void setSoort_antwoorden(List<String> soort_antwoorden) {
         this.soort_antwoorden = soort_antwoorden;
     }
 
 
-    public String getSoort_vragen() {
+    public List<String> getSoort_vragen() {
         return soort_vragen;
     }
 
-    public void setSoort_vragen(String soort_vragen) {
+    public void setSoort_vragen(List<String> soort_vragen) {
         this.soort_vragen = soort_vragen;
     }
 
