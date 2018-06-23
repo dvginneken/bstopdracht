@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 
+import java.util.List;
+
 
 public class Speelscherm extends Application {
     Instellingen instellingen;
@@ -59,8 +61,8 @@ public class Speelscherm extends Application {
         VBox eindbox = new VBox(10, opening);
 
 
-        String sv = this.instellingen.getSoort_vragen();
-        String sa = this.instellingen.getSoort_antwoorden();
+        List<String> sv = this.instellingen.getSoort_vragen();
+        List<String> sa = this.instellingen.getSoort_antwoorden();
         vraag[] vraaglijst = new vraag[instellingen.getHoeveelheid()];
 
         if (instellingen.getTijd() == "Nee"){
