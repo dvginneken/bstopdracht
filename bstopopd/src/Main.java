@@ -26,17 +26,15 @@ public class Main extends Application {
         optiescherm.naar_speelscherm.addEventHandler(MouseEvent.MOUSE_RELEASED,
                 new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent e) {
-                        //Instellingen inst =  optiescherm.returinst();
-                        //System.out.println(inst.getHoeveelheid());
-                        //try{
+                        try{
                             Speelscherm speelscherm = new Speelscherm(optiescherm.returinst());
                             speelscherm.start(primaryStage);
                             speelscherm.naar_beginscherm.setOnAction(event -> {
                                 startscherm.start(primaryStage);
                             });
-                        //}catch (NullPointerException f){
-                        //    System.out.println("error");
-                        //}
+                        }catch (NullPointerException f){
+                            System.out.println("error");
+                        }
                     }
                 });
         toetsscherm.naar_beginscherm.setOnAction(event -> {

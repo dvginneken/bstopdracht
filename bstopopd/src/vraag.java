@@ -84,7 +84,6 @@ public class vraag {
             } else {
                 this.typequestion = temp;
                 this.typeanswer = temp2;
-                System.out.println(temp + " " + temp2);
                 go = true;
             }
         }
@@ -276,7 +275,6 @@ public class vraag {
             List<List<String>> keys = new ArrayList<List<String>>(hmap.keySet());
             List<List<String>> keys2 = filter_answers(keys, hmap);
             Integer rngmax = rnd.nextInt(keys2.size());
-            System.out.println(this.typequestion);
             this.vraag = String.format(hmap.get(keys2.get(rngmax)), answertype(this.typequestion, aminozuur));
             this.antwoord = answertype(this.typeanswer, aminozuur);
             String tempatype = gettemptypes()[0];
