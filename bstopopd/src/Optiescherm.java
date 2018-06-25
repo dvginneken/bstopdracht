@@ -321,7 +321,6 @@ public class Optiescherm extends Application {
                     inst.setSoort_antwoorden(chk_sa);
                     RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
                     String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur", "Structuur"};
-                    System.out.println(chk_sa.size());
                     if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv)) ||
                             (chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list))){
                         setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
