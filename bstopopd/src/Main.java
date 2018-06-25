@@ -1,12 +1,16 @@
 package src;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 //De main functie die wat schermen aanroept, te beginnen bij het startscherm.
 
 public class Main extends Application {
     Instellingen instellingen = new Instellingen();
+    //Speelscherm speelscherm;
     Optiescherm optiescherm = new Optiescherm(instellingen);
     startScherm startscherm = new startScherm();
     toetsScherm toetsscherm = new toetsScherm();
@@ -18,6 +22,18 @@ public class Main extends Application {
         startscherm.quit.setOnAction(event -> {startscherm.close(primaryStage);});
         optiescherm.naar_beginscherm.setOnAction(event -> startscherm.start(primaryStage));
         optiescherm.afsluiten.setOnAction(event -> optiescherm.close(primaryStage));
+        optiescherm.naar_speelscherm.addEventHandler(MouseEvent.MOUSE_RELEASED,
+                new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent e) {
+                        //Instellingen inst =  optiescherm.returinst();
+                        //System.out.println(inst.getHoeveelheid());
+                        Speelscherm speelscherm = new Speelscherm(optiescherm.returinst());
+                        speelscherm.start(primaryStage);
+                        speelscherm.naar_beginscherm.setOnAction(event -> {
+                            startscherm.start(primaryStage);
+                        });
+                    }
+                });
         toetsscherm.naar_beginscherm.setOnAction(event -> {
             startscherm.start(primaryStage);
             toetsscherm.resetwindow();
