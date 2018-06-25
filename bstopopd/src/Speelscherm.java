@@ -39,6 +39,7 @@ public class Speelscherm extends Application {
     Integer startTime;
     Integer seconds;
     private Label label1;
+    Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
 
     public static void main(String[] args) {
         launch(args);
@@ -80,7 +81,12 @@ public class Speelscherm extends Application {
                     update(vraaglijst[index]);
                 });
                 this.volgende.setOnAction(event -> {
-                    next(vraaglijst);
+                    try {
+                        next(vraaglijst);
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        resultaatscherm.start(primaryStage);
+                    }
+
                 });
                 this.vorige.setOnAction(event -> {
                     try {
@@ -158,7 +164,6 @@ public class Speelscherm extends Application {
         seconds--;
         // Wijzig de text van label1
         label1.setText("Countdown: "+seconds.toString());
-        System.out.println(seconds+" "+Math.floor(seconds/60.0));
         // als de seconden <= 0
         if (seconds <= 0) {
             // de frameanimatie wordt gestopt
@@ -183,8 +188,6 @@ public class Speelscherm extends Application {
     }
 
     private void update_timer(vraag vraag, vraag[] vraaglijst){
-        System.out.println("in update_timer");
-        System.out.println(vraag.getVraag());
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         try {
