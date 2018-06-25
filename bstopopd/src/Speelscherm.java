@@ -31,7 +31,7 @@ public class Speelscherm extends Application {
     Label vraag_label = new Label();
     VBox buttons =  new VBox(10);
     int index = 0;
-    private final Integer startTime = Integer.parseInt(instellingen.getSeconden());;
+    Integer startTime;
     private Integer seconds = startTime;
     private Label label1;
 
@@ -41,6 +41,7 @@ public class Speelscherm extends Application {
 
     public Speelscherm(Instellingen instellingen) {
         this.instellingen = instellingen;
+        startTime = Integer.parseInt(instellingen.getSeconden().trim());
     }
 
     @Override
