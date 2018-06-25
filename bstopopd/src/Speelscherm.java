@@ -9,6 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -197,6 +198,7 @@ public class Speelscherm extends Application {
 
     private VBox buttonbox(vraag vraag) throws IOException {
         final ToggleGroup optiegroep = new ToggleGroup();
+        Integer ind = 0;
         for (String optie:vraag.getOpties()){
             if (vraag.getTypeanswer().equals("Structuur")){
                 try{
@@ -208,15 +210,25 @@ public class Speelscherm extends Application {
                     else{
                         pathway = (file+"/bstopopd/src/pictures");
                     };
-                    FileInputStream inputstream = new FileInputStream(pathway +"."+ optie +".png");
+                    FileInputStream inputstream = new FileInputStream(pathway +"/"+ optie +".png");
                     Image image = new Image(inputstream);
+                    ImageView imageView = new ImageView(image);
+                    imageView.setFitHeight(100);
+                    imageView.setFitWidth(150);
+                    Group root = new Group(imageView);
+                    RadioButton optiebutton = new RadioButton("");
+                    optiebutton.setToggleGroup(optiegroep);
+                    HBox buttoncombi = new HBox(10);
+                    buttoncombi.getChildren().addAll(optiebutton, root);
+                    buttons.getChildren().add(buttoncombi);
                 }catch (IOException e){
                     System.out.println("IOEXEPTION");
                 }
+            }else {
+                RadioButton optiebutton = new RadioButton(optie + "\n");
+                optiebutton.setToggleGroup(optiegroep);
+                buttons.getChildren().add(optiebutton);
             }
-            RadioButton optiebutton = new RadioButton(optie + "\n");
-            optiebutton.setToggleGroup(optiegroep);
-            buttons.getChildren().add(optiebutton);
         }
         return buttons;
     }
