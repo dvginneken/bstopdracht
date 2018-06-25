@@ -8,6 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -18,6 +19,10 @@ import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -170,7 +175,11 @@ public class Speelscherm extends Application {
     private void update(vraag vraag){
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
-        buttons = buttonbox(vraag);
+        try {
+            buttons = buttonbox(vraag);
+        }catch (IOException e){
+
+        }
     }
 
     private void update_timer(vraag vraag, vraag[] vraaglijst){
@@ -178,13 +187,33 @@ public class Speelscherm extends Application {
         System.out.println(vraag.getVraag());
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
-        buttons = buttonbox(vraag);
+        try {
+            buttons = buttonbox(vraag);
+        }catch (IOException e){
+
+        }
         doTime(vraag, vraaglijst);
     }
 
-    private VBox buttonbox(vraag vraag){
+    private VBox buttonbox(vraag vraag) throws IOException {
         final ToggleGroup optiegroep = new ToggleGroup();
         for (String optie:vraag.getOpties()){
+            if (vraag.getTypeanswer().equals("Structuur")){
+                try{
+                    String pathway = "C:/Users/julian/IdeaProjects/bstopdracht3/bstopopd/src/";
+                    File file = new File("").getAbsoluteFile();
+                    if (System.getProperty("os.name").split("")[0] == "Windows" ){
+                        pathway = (file+"\\bstopopd\\src\\pictures");
+                    }
+                    else{
+                        pathway = (file+"/bstopopd/src/pictures");
+                    };
+                    FileInputStream inputstream = new FileInputStream(pathway +"."+ optie +".png");
+                    Image image = new Image(inputstream);
+                }catch (IOException e){
+                    System.out.println("IOEXEPTION");
+                }
+            }
             RadioButton optiebutton = new RadioButton(optie + "\n");
             optiebutton.setToggleGroup(optiegroep);
             buttons.getChildren().add(optiebutton);
