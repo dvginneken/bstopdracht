@@ -104,8 +104,9 @@ public class Speelscherm extends Application {
             // Voeg de layout aan de groep
             root.getChildren().add(layout);
             // Ga naar de methode doTime
-            vraaglijst[index] = new vraag(sv, sa);
-            vraaglijst[index].generatequestions();
+            for (Integer i = 0; i < instellingen.getHoeveelheid(); i++) {
+                vraaglijst[i] = new vraag(sv, sa);
+                vraaglijst[i].generatequestions();}
             this.starten.setOnAction(event -> {;
                 update_timer(vraaglijst[index], vraaglijst);
             });
@@ -133,8 +134,6 @@ public class Speelscherm extends Application {
             // De handle methode wordt overschreven
             @Override
             public void handle(ActionEvent event){
-                System.out.println(vraag);
-                System.out.println(vraaglijst);
                 newmethod(time, vraag, vraaglijst);
             }
 
@@ -156,9 +155,10 @@ public class Speelscherm extends Application {
         // als de seconden <= 0
         if (seconds <= 0) {
             // de frameanimatie wordt gestopt
+            seconds = 3;
             time.stop();
             label1.setText("Countdown is op 0 nu");
-            next(vraaglijst);
+            next_timer(vraaglijst);
 
 
         }
@@ -172,6 +172,8 @@ public class Speelscherm extends Application {
     }
 
     private void update_timer(vraag vraag, vraag[] vraaglijst){
+        System.out.println("in update_timer");
+        System.out.println(vraag.getVraag());
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         buttons = buttonbox(vraag);
@@ -191,6 +193,12 @@ public class Speelscherm extends Application {
         this.index += 1;
         update(vraaglijst[this.index]);
     }
+
+    private void next_timer(vraag[] vraaglijst){
+        this.index += 1;
+        update_timer(vraaglijst[this.index], vraaglijst);
+    }
+
     private void previous(vraag[] vraaglijst){
         index -= 1;
         update(vraaglijst[index]);
@@ -198,3 +206,4 @@ public class Speelscherm extends Application {
 
 
 }
+//TODO: seconden kiezen
