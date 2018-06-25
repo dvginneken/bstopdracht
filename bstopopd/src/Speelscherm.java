@@ -5,13 +5,11 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -31,9 +29,6 @@ public class Speelscherm extends Application {
     Label vraag_label = new Label();
     VBox buttons =  new VBox(10);
     int index = 0;
-    private final Integer startTime = 3;
-    private Integer seconds = startTime;
-    private Label label1;
 
     public static void main(String[] args) {
         launch(args);
@@ -53,9 +48,9 @@ public class Speelscherm extends Application {
         Text opening = new Text("Hoi " + this.instellingen.getNaam());
         opening.setFont(Font.font("open-sans", 25));
 
-        this.naar_beginscherm.setOnAction(event -> {
+        /*naar_beginscherm.setOnAction(event ->{
             startscherm.start(primaryStage);
-        });
+        });*/
 
         HBox knoppen = new HBox(10, this.naar_beginscherm, this.vorige, this.volgende, this.starten);
         VBox eindbox = new VBox(10, opening);
@@ -65,60 +60,34 @@ public class Speelscherm extends Application {
         List<String> sa = this.instellingen.getSoort_antwoorden();
         vraag[] vraaglijst = new vraag[instellingen.getHoeveelheid()];
 
-        if (instellingen.getTijd() == "Nee"){
-            for (Integer i = 0; i < instellingen.getHoeveelheid(); i++) {
-                vraaglijst[i] = new vraag(sv, sa);
-                vraaglijst[i].generatequestions();
-                this.starten.setOnAction(event -> {
-                    update(vraaglijst[index]);
-                });
-                this.volgende.setOnAction(event -> {
-                    next(vraaglijst);
-                });
-                this.vorige.setOnAction(event -> {
-                    try {
-                        previous(vraaglijst);
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Kan niet naar vorige.");
-                    }
-                });
-            }
-        }else {
-            //De groep bepalen
-            Group root = new Group();
-            // Een Vbox maken om de 2 labels onder elkaar te zetten
-            VBox layout = new VBox(5);
-
-            // De wigdet label met naam label1 aanmaken
-            label1 = new Label();
-            // label1 krijgt de witte tekstkleur
-            label1.setTextFill(Color.BLACK);
-            // de font van label1 wordt op 20 pixels gezet
-            label1.setFont(Font.font(20));
-
-
-            // label1 wordt aan de layout toegevoegd
-            layout.getChildren().add(label1);
-            // De layout krijgt een afstand van 40 pixels naar rechts
-            layout.setLayoutX(40);
-            // Voeg de layout aan de groep
-            root.getChildren().add(layout);
-            // Ga naar de methode doTime
-            vraaglijst[index] = new vraag(sv, sa);
-            vraaglijst[index].generatequestions();
-            this.starten.setOnAction(event -> {;
-                update_timer(vraaglijst[index], vraaglijst);
+        for (Integer i = 0; i < instellingen.getHoeveelheid(); i++){
+            vraaglijst[i] = new vraag(sv, sa);
+            vraaglijst[i].generatequestions();
+            this.starten.setOnAction(event -> {
+                update(vraaglijst[index]);
             });
-            eindbox.getChildren().add(root);
+            this.volgende.setOnAction(event -> {
+                next(vraaglijst);
+            });
+            this.vorige.setOnAction(event -> {
+                try{
+                    previous(vraaglijst);}
+                catch(ArrayIndexOutOfBoundsException e){
+                    System.out.println("Kan niet naar vorige.");
+                }
+            });
+
+
         }
+
+
         eindbox.getChildren().addAll(knoppen, vraag_label, buttons);
 
         pane.getChildren().add(eindbox);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
 
-    private void doTime(vraag vraag, vraag[] vraaglijst){
+    /*private void doTime(){
         // Timeline, is een animatie van keyframes, wordt aangeroepen  (de frames worden stapgewijs bijgehouden)
         // https://docs.oracle.com/javase/8/javafx/api/javafx/animation/Timeline.html
         Timeline time = new Timeline();
@@ -133,9 +102,7 @@ public class Speelscherm extends Application {
             // De handle methode wordt overschreven
             @Override
             public void handle(ActionEvent event){
-                System.out.println(vraag);
-                System.out.println(vraaglijst);
-                newmethod(time, vraag, vraaglijst);
+                newmethod(time);
             }
 
 
@@ -147,7 +114,7 @@ public class Speelscherm extends Application {
 
     }
 
-    private void newmethod(Timeline time, vraag vraag, vraag[] vraaglijst){
+    private void newmethod(Timeline time){
         // 1 van het aantal seconden afhalen
         seconds--;
         // Wijzig de text van label1
@@ -157,28 +124,30 @@ public class Speelscherm extends Application {
         if (seconds <= 0) {
             // de frameanimatie wordt gestopt
             time.stop();
+            // een pop-up wordt aangeroepen
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            // De tekst van de pop-up
+            alert.setHeaderText("Count down reset to 0!");
+            // De pop-up wordt getoond
+            alert.show();
+            // Wijzig de text van label1
+
             label1.setText("Countdown is op 0 nu");
-            next(vraaglijst);
+            label2.setText("Gewijzigd");
+            label2.setFont(Font.font(200));
+
 
 
         }
 
     }
-
+    */
+    }
     private void update(vraag vraag){
-        //TODO: NullpointerException vraag.getvraag()
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         buttons = buttonbox(vraag);
     }
-
-    private void update_timer(vraag vraag, vraag[] vraaglijst){
-        vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
-        buttons.getChildren().clear();
-        buttons = buttonbox(vraag);
-        doTime(vraag, vraaglijst);
-    }
-
     private VBox buttonbox(vraag vraag){
         final ToggleGroup optiegroep = new ToggleGroup();
         for (String optie:vraag.getOpties()){
@@ -189,8 +158,8 @@ public class Speelscherm extends Application {
         return buttons;
     }
     private void next(vraag[] vraaglijst){
-        this.index += 1;
-        update(vraaglijst[this.index]);
+        index += 1;
+        update(vraaglijst[index]);
     }
     private void previous(vraag[] vraaglijst){
         index -= 1;
