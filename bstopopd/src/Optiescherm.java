@@ -72,7 +72,7 @@ public class Optiescherm extends Application {
         Answertypes.getChildren().addAll(antwoordlabel);
         time1.getChildren().addAll(tijdlabel);
         time2.getChildren().addAll(secondenlabel);
-        buttonscontrol.getChildren().addAll(naar_beginscherm,naar_speelscherm, afsluiten);
+        buttonscontrol.getChildren().addAll(naar_beginscherm, naar_speelscherm, afsluiten);
         mainbox.getChildren().addAll(stackmain, hboxnaam, buttonsbox, questionbox, time1, time2, buttonscontrol);
 
         mainPane = stylemainPane(mainPane);
@@ -170,6 +170,7 @@ public class Optiescherm extends Application {
          //  - als dit allemaal goed was ingevuld wordt het speelscherm aangeroepen
          //  - hier komen nog wat else statements waarbij de errorlabels zichtbaar gemaakt worden als er niks is ingevuld
          */
+
 
         Scene main = new Scene(mainPane, 1000,600);
         primaryStage.setScene(main);
@@ -320,6 +321,7 @@ public class Optiescherm extends Application {
                     inst.setSoort_antwoorden(chk_sa);
                     RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
                     String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur", "Structuur"};
+                    System.out.println(chk_sa.size());
                     if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv)) ||
                             (chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list))){
                         setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
@@ -332,6 +334,7 @@ public class Optiescherm extends Application {
                         inst.setSeconden(sec_keuze);
                         //Speelscherm speelscherm = new Speelscherm(inst);
                         //speelscherm.start(primaryStage);
+                        return this.inst;
                     }else{
                         setLabelevent("Je moet kiezen of je wel of niet met tijd wilt spelen.");
                     }
@@ -344,8 +347,7 @@ public class Optiescherm extends Application {
         }else{
             setLabelevent("Je moet je naam invullen.");
         }
-
-        return this.inst;
+        return null;
     }
 
 };
