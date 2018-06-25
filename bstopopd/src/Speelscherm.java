@@ -46,6 +46,8 @@ public class Speelscherm extends Application {
     private Label label1;
     Label title = new Label("Speelscherm");
     Group root = new Group();
+    final ToggleGroup optiegroep = new ToggleGroup();
+    Boolean[] correctbool;
 
     public static void main(String[] args) {
         launch(args);
@@ -56,6 +58,7 @@ public class Speelscherm extends Application {
         startTime = Integer.parseInt(instellingen.getSeconden().trim());
         seconds = startTime;
         this.opening = new Label("Welkom " + this.instellingen.getNaam()+"!");
+        correctbool = new Boolean[this.instellingen.getHoeveelheid()];
     }
 
     @Override
@@ -168,6 +171,17 @@ public class Speelscherm extends Application {
         primaryStage.setScene(main);
         primaryStage.show();
         primaryStage.setTitle("Optiescherm");
+    }
+
+    private Integer score(Boolean[] boolist){
+        Integer score = 0;
+        for (Boolean bool : boolist){
+            //System.out.println(bool);
+            if (bool.equals(true)){
+                score += 1;
+            }
+        }
+        return score;
     }
 
     private VBox styleStartMain(VBox startmain){
@@ -396,7 +410,6 @@ public class Speelscherm extends Application {
     }
 
     private HBox buttonbox(vraag vraag) throws IOException {
-        final ToggleGroup optiegroep = new ToggleGroup();
         Integer ind = 0;
         for (String optie:vraag.getOpties()){
             if (vraag.getTypeanswer().equals("Structuur")){
@@ -435,8 +448,42 @@ public class Speelscherm extends Application {
         return buttons;
     }
     private void next(vraag[] vraaglijst){
-        this.index += 1;
-        update(vraaglijst[this.index]);
+        if (index == vraaglijst.length-1){
+            try {
+                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                vraagtoggle.setSelected(false);
+                String texttoggle = vraagtoggle.getText();
+                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                    correctbool[index] = true;
+                } else {
+                    correctbool[index] = false;
+                }
+            } catch (NullPointerException e) {
+                correctbool[index] = false;
+                System.out.println("No answer selected");
+            }
+            System.out.println(score(correctbool));
+        }
+        else {
+            try {
+                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                vraagtoggle.setSelected(false);
+                String texttoggle = vraagtoggle.getText();
+                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                    correctbool[index] = true;
+                } else {
+                    correctbool[index] = false;
+                }
+            } catch (NullPointerException e) {
+                correctbool[index] = false;
+                System.out.println("No answer selected");
+            }
+            this.index += 1;
+            //System.out.println(index);
+            update(vraaglijst[this.index]);
+        }
     }
 
     private HBox center_HBox(HBox hbox){
@@ -445,8 +492,41 @@ public class Speelscherm extends Application {
     }
 
     private void next_timer(vraag[] vraaglijst){
-        this.index += 1;
-        update_timer(vraaglijst[this.index], vraaglijst);
+        if (index == vraaglijst.length-1){
+            try {
+                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                vraagtoggle.setSelected(false);
+                String texttoggle = vraagtoggle.getText();
+                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                    correctbool[index] = true;
+                } else {
+                    correctbool[index] = false;
+                }
+            } catch (NullPointerException e) {
+                correctbool[index] = false;
+                System.out.println("No answer selected");
+            }
+            System.out.println(score(correctbool));
+        }
+        else {
+            try {
+                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                vraagtoggle.setSelected(false);
+                String texttoggle = vraagtoggle.getText();
+                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                    correctbool[index] = true;
+                } else {
+                    correctbool[index] = false;
+                }
+            } catch (NullPointerException e) {
+                correctbool[index] = false;
+                System.out.println("No answer selected");
+            }
+            this.index += 1;
+            update_timer(vraaglijst[this.index], vraaglijst);
+        }
     }
 
     private void previous(vraag[] vraaglijst){
