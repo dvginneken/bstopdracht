@@ -353,8 +353,17 @@ public class vraag {
                 List<String> strList = Arrays.asList(options);
                 Collections.shuffle(strList);
                 this.opties = strList.toArray(new String[strList.size()]);
-            } else if (this.typeanswer.trim().equals("structuur")) {
-                String[] options = new String[]{"zijketen1", "zijketen2", "zijketen3"};
+            } else if (this.typeanswer.trim().equals("Structuur")) {
+                amminozuur acid2 = getRNDAcidNot(aminozuur.getNaam());
+                amminozuur acid3 = getRNDAcidNot(aminozuur.getNaam());
+                amminozuur acid4 = getRNDAcidNot(aminozuur.getNaam());
+                while (acid2.getNaam().equals(acid3.getNaam()) || acid2.getNaam().equals(aminozuur.getNaam()) || acid3.getNaam().equals(aminozuur.getNaam())
+                        || acid4.getNaam().equals(acid2.getNaam()) || acid4.getNaam().equals(aminozuur.getNaam()) || acid4.getNaam().equals(acid3.getNaam())) {
+                    acid2 = getRNDAcidNot(aminozuur.getNaam());
+                    acid3 = getRNDAcidNot(aminozuur.getNaam());
+                    acid4 = getRNDAcidNot(aminozuur.getNaam());
+                }
+                String[] options = new String[]{aminozuur.getNaam(), acid2.getNaam(), acid3.getNaam()};
                 List<String> strList = Arrays.asList(options);
                 Collections.shuffle(strList);
                 this.opties = strList.toArray(new String[strList.size()]);
