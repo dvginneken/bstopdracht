@@ -1,5 +1,6 @@
 package src;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.input.DragEvent;
@@ -27,11 +28,15 @@ public class Main extends Application {
                     public void handle(MouseEvent e) {
                         //Instellingen inst =  optiescherm.returinst();
                         //System.out.println(inst.getHoeveelheid());
-                        Speelscherm speelscherm = new Speelscherm(optiescherm.returinst());
-                        speelscherm.start(primaryStage);
-                        speelscherm.naar_beginscherm.setOnAction(event -> {
-                            startscherm.start(primaryStage);
-                        });
+                        try{
+                            Speelscherm speelscherm = new Speelscherm(optiescherm.returinst());
+                            speelscherm.start(primaryStage);
+                            speelscherm.naar_beginscherm.setOnAction(event -> {
+                                startscherm.start(primaryStage);
+                            });
+                        }catch (NullPointerException f){
+                            System.out.println("error");
+                        }
                     }
                 });
         toetsscherm.naar_beginscherm.setOnAction(event -> {
