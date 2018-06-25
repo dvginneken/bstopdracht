@@ -40,7 +40,7 @@ public class Speelscherm extends Application {
     Integer startTime;
     Integer seconds;
     private Label label1;
-    Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
+
 
     public static void main(String[] args) {
         launch(args);
@@ -55,8 +55,7 @@ public class Speelscherm extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane pane = new Pane();
-        Scene scene = new Scene(pane, 1300, 800);
-        primaryStage.setTitle("Speelscherm");
+        Scene scene = new Scene(pane, 1300, 800);;
 
 
         Text opening = new Text("Hoi " + this.instellingen.getNaam());
@@ -85,6 +84,7 @@ public class Speelscherm extends Application {
                     try {
                         next(vraaglijst);
                     } catch (ArrayIndexOutOfBoundsException e) {
+                        Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
                         resultaatscherm.start(primaryStage);
                     }
 
