@@ -32,7 +32,7 @@ public class Speelscherm extends Application {
     VBox buttons =  new VBox(10);
     int index = 0;
     Integer startTime;
-    private Integer seconds = startTime;
+    Integer seconds;
     private Label label1;
 
     public static void main(String[] args) {
@@ -42,6 +42,7 @@ public class Speelscherm extends Application {
     public Speelscherm(Instellingen instellingen) {
         this.instellingen = instellingen;
         startTime = Integer.parseInt(instellingen.getSeconden().trim());
+        seconds = startTime;
     }
 
     @Override
@@ -156,7 +157,7 @@ public class Speelscherm extends Application {
         // als de seconden <= 0
         if (seconds <= 0) {
             // de frameanimatie wordt gestopt
-            seconds = Integer.parseInt(instellingen.getSeconden());
+            seconds = Integer.parseInt(instellingen.getSeconden().trim());
             time.stop();
             label1.setText("Countdown is op 0 nu");
             next_timer(vraaglijst);
