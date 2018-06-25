@@ -1,5 +1,6 @@
 package src;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -289,11 +290,23 @@ public class toetsScherm extends Application {
                 String format = "";
                 clearfile(outfile);
                 clearfile(outfile2);
+                List<String> doublecheck = new ArrayList<String>();
                 for (Integer i = 0; i < option; i++) {
                     vraaglijst[i] = new vraag();
+                    vraaglijst[i].generatequestions();
+                    Boolean go = false;
+                    while (go.equals(false)){
+                        if (!doublecheck.contains(vraaglijst[i].getVraag()+vraaglijst[i].getAntwoord())){
+                            doublecheck.add(vraaglijst[i].getVraag()+vraaglijst[i].getAntwoord());
+                            go = true;
+                        }
+                        else {
+                            vraaglijst[i] = new vraag();
+                            vraaglijst[i].generatequestions();
+                        }
+                    }
                     FileWriter fw = new FileWriter(outfile, true);
                     PrintWriter pw = new PrintWriter(fw);
-                    vraaglijst[i].generatequestions();
                     pw.println((i + 1) + ". " + vraaglijst[i].getVraag() + "\n");
                     switch (vraaglijst[i].getOpties().length){
                         case 3:

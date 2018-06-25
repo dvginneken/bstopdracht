@@ -7,10 +7,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     Instellingen instellingen = new Instellingen();
-    Optiescherm optiescherm = new Optiescherm();
+    Optiescherm optiescherm = new Optiescherm(instellingen);
     startScherm startscherm = new startScherm();
     toetsScherm toetsscherm = new toetsScherm();
-
 
 
     public void start(Stage primaryStage) {
@@ -24,7 +23,6 @@ public class Main extends Application {
             toetsscherm.resetwindow();
         });
         toetsscherm.afsluiten.setOnAction(event -> toetsscherm.close(primaryStage));
-
         startscherm.start(primaryStage);
     }
 

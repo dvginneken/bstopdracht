@@ -62,4 +62,8 @@ public class Instellingen {
     public void setNaam(String naam) {
         this.naam = naam;
     }
+
+    public Instellingen returnAll(){
+        return this;
+    }
 }

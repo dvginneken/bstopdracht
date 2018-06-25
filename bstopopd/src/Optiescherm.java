@@ -25,11 +25,14 @@ public class Optiescherm extends Application {
     Button naar_beginscherm = new Button("Naar beginscherm");
     Button afsluiten = new Button("Afsluiten");
     Button naar_speelscherm = new Button("Naar speelscherm");
-    Instellingen inst = new Instellingen();
-    Speelscherm speelscherm = new Speelscherm(inst);
+    Instellingen inst;
     Label title = new Label("Instellingen");
     TextField tekst = new TextField();
     Label label_event = new Label("");
+
+    public Optiescherm(Instellingen inst) {
+        this.inst = inst;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -197,7 +200,8 @@ public class Optiescherm extends Application {
                                 RadioButton chk_sec = (RadioButton)tijdgroep.getSelectedToggle();
                                 String sec_keuze = chk_sec.getText();
                                 inst.setSeconden(sec_keuze);
-                                this.speelscherm.start(primaryStage);
+                                Speelscherm speelscherm = new Speelscherm(inst);
+                                speelscherm.start(primaryStage);
                             }else{
                                 setLabelevent("Je moet kiezen of je wel of niet met tijd wilt spelen.");
                             }
@@ -334,6 +338,10 @@ public class Optiescherm extends Application {
             value = true;
         }
         return value;
+    }
+
+    public Optiescherm returnall(){
+        return this;
     }
 
 };
