@@ -37,7 +37,8 @@ public class Speelscherm extends Application {
     Button vorige = new Button("Vorige vraag");
     Button volgende = new Button("Volgende vraag");
     Button starten = new Button("Spel starten");
-    Label vraag_label = new Label("Vraag 1: VRAAG VRAAG VRAAG VRAAG?");
+    Label vraag_label = new Label("");
+    Label opening;
     HBox buttons =  new HBox(20);
     int index = 0;
     Integer startTime;
@@ -54,6 +55,7 @@ public class Speelscherm extends Application {
         this.instellingen = instellingen;
         startTime = Integer.parseInt(instellingen.getSeconden().trim());
         seconds = startTime;
+        this.opening = new Label("Welkom " + this.instellingen.getNaam()+"!");
     }
 
     @Override
@@ -61,7 +63,7 @@ public class Speelscherm extends Application {
         BorderPane mainPane = new BorderPane();
         VBox mainbox = new VBox();
         StackPane stackmain = new StackPane();
-        HBox startmain = new HBox();
+        VBox startmain = new VBox();
         HBox buttonsbox = new HBox(10);
         VBox mainmain = new VBox(10);
         HBox Questiontypes = new HBox(5);
@@ -71,7 +73,7 @@ public class Speelscherm extends Application {
 
         mainPane.setCenter(mainbox);
         stackmain.getChildren().addAll(title);
-        startmain.getChildren().addAll(starten);
+        startmain.getChildren().addAll(opening, starten);
         buttonsbox.getChildren().addAll(buttons);
         buttonscontrol.getChildren().addAll(vorige, volgende, naar_beginscherm);
         mainmain.getChildren().addAll(Questiontypes ,opties, buttonsbox, countdowntimer, buttonscontrol);
@@ -86,7 +88,7 @@ public class Speelscherm extends Application {
         styleButton3(starten);
         stylequestionlabel();
         mainPane.setMargin(mainbox,new Insets(50,150,100,150));
-        mainmain.setMargin(Questiontypes,new Insets(10,50,0,50));
+        mainmain.setMargin(Questiontypes,new Insets(10,10,0,10));
         mainbox.setMargin(buttonscontrol,new Insets(50,50,30,50));
         styleTypeboxes(Questiontypes);
         styleButton1(vorige);
@@ -96,8 +98,8 @@ public class Speelscherm extends Application {
         buttonsbox.setHgrow(buttons ,Priority.ALWAYS);
         buttonsbox.setHgrow(root ,Priority.ALWAYS);
         root.setAutoSizeChildren(true);
-
-        Text opening = new Text("Hoi " + this.instellingen.getNaam());
+        opening.setPadding(new Insets(20,20,20,20));
+        vraag_label.setWrapText(true);
         opening.setFont(Font.font("open-sans", 25));
 
         this.naar_beginscherm.setOnAction(event -> {
@@ -168,7 +170,7 @@ public class Speelscherm extends Application {
         primaryStage.setTitle("Optiescherm");
     }
 
-    private HBox styleStartMain(HBox startmain){
+    private VBox styleStartMain(VBox startmain){
         startmain.setAlignment(Pos.CENTER);
         startmain.setPadding(new Insets(50,50,50,50));
         return startmain;
@@ -182,7 +184,7 @@ public class Speelscherm extends Application {
         return mainmain;
     }
 
-    private HBox styleStartMain2(HBox startmain, VBox mainmain){
+    private VBox styleStartMain2(VBox startmain, VBox mainmain){
         startmain.setPadding(new Insets(0,0,0,0));
         startmain.setPrefHeight(0);
         startmain.getChildren().clear();
@@ -214,7 +216,7 @@ public class Speelscherm extends Application {
         this.vraag_label.setPadding(new Insets(40,0,20,0));
         this.vraag_label.setAlignment(Pos.CENTER);
         this.vraag_label.setContentDisplay(ContentDisplay.CENTER);
-        this.vraag_label.setFont(Font.font("open-sans", 26));
+        this.vraag_label.setFont(Font.font("open-sans", 18));
     }
 
     private VBox stylemainBox(VBox mainbox){
