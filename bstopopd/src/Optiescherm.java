@@ -72,7 +72,7 @@ public class Optiescherm extends Application {
         Answertypes.getChildren().addAll(antwoordlabel);
         time1.getChildren().addAll(tijdlabel);
         time2.getChildren().addAll(secondenlabel);
-        buttonscontrol.getChildren().addAll(naar_speelscherm, naar_beginscherm, afsluiten);
+        buttonscontrol.getChildren().addAll(naar_beginscherm,naar_speelscherm, afsluiten);
         mainbox.getChildren().addAll(stackmain, hboxnaam, buttonsbox, questionbox, time1, time2, buttonscontrol);
 
         mainPane = stylemainPane(mainPane);
@@ -170,56 +170,6 @@ public class Optiescherm extends Application {
          //  - als dit allemaal goed was ingevuld wordt het speelscherm aangeroepen
          //  - hier komen nog wat else statements waarbij de errorlabels zichtbaar gemaakt worden als er niks is ingevuld
          */
-        this.naar_speelscherm.setOnAction(event -> {
-            if ((tekst.getText() != null && ! tekst.getText().isEmpty())){
-                inst.setNaam(tekst.getText());
-                RadioButton chk_h = (RadioButton)group.getSelectedToggle();
-                String hoeveelheidkeuze = chk_h.getText();
-                inst.setHoeveelheid(hoeveelheidkeuze);
-                //RadioButton chk_sv = (RadioButton)soortvragen.getSelectedToggle();
-                List<String> chk_sv = new ArrayList<>();
-                for (Integer i = 0; i < cb1.length; i++){
-                    if(cb1[i].isSelected()){
-                        chk_sv.add(opties[i]);
-                    }
-                }
-                if ((chk_sv != null)){
-                    inst.setSoort_vragen(chk_sv);
-                    List<String> chk_sa = new ArrayList<>();
-                    for (Integer i = 0; i < cb2.length; i++){
-                        if(cb2[i].isSelected()){
-                            chk_sa.add(opties[i]);
-                        }
-                    }
-                    if ((chk_sa != null)){
-                        inst.setSoort_antwoorden(chk_sa);
-                        RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
-                        String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur", "Structuur"};
-                        if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv)) ||
-                                (chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list))){
-                            setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
-                        }else
-                            if ((chk_tijd != null)){
-                                String tijdkeuze = chk_tijd.getText();
-                                inst.setTijd(tijdkeuze);
-                                RadioButton chk_sec = (RadioButton)tijdgroep.getSelectedToggle();
-                                String sec_keuze = chk_sec.getText();
-                                inst.setSeconden(sec_keuze);
-                                //Speelscherm speelscherm = new Speelscherm(inst);
-                                //speelscherm.start(primaryStage);
-                            }else{
-                                setLabelevent("Je moet kiezen of je wel of niet met tijd wilt spelen.");
-                            }
-                        }else{
-                            setLabelevent("Je moet een soort antwoord selecteren.");
-                        }
-                    }else{
-                        setLabelevent("Je moet een soort vraag selecteren.");
-                    }
-                }else{
-                    setLabelevent("Je moet je naam invullen.");
-            }
-        });
 
         Scene main = new Scene(mainPane, 1000,600);
         primaryStage.setScene(main);
