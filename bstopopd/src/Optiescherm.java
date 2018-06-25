@@ -175,7 +175,6 @@ public class Optiescherm extends Application {
         Scene main = new Scene(mainPane, 1000,600);
         primaryStage.setScene(main);
         primaryStage.show();
-        primaryStage.setTitle("Optiescherm");
     }
 
     private void setLabelevent(String text){
