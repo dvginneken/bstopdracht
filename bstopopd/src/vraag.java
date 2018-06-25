@@ -43,12 +43,9 @@ public class vraag {
                     inlist(new String[]{temp, temp2}, list)) {
                 temp = typelist[rand.nextInt(typelist.length)];
                 temp2 = typelist[rand.nextInt(typelist.length)];
-                System.out.println(temp + " " + temp2 + Boolean.toString(inlist(new String[]{temp, temp2}, typelist)));
             } else {
                 this.typequestion = temp;
                 this.typeanswer = temp2;
-                System.out.println("\n");
-                System.out.println(temp + " " + temp2);
                 go = true;
             }
         }
@@ -87,7 +84,6 @@ public class vraag {
             } else {
                 this.typequestion = temp;
                 this.typeanswer = temp2;
-                System.out.println("\n");
                 System.out.println(temp + " " + temp2);
                 go = true;
             }
