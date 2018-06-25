@@ -31,7 +31,7 @@ public class Speelscherm extends Application {
     Label vraag_label = new Label();
     VBox buttons =  new VBox(10);
     int index = 0;
-    private final Integer startTime = 3;
+    private final Integer startTime = Integer.parseInt(instellingen.getSeconden());;
     private Integer seconds = startTime;
     private Label label1;
 
@@ -155,7 +155,7 @@ public class Speelscherm extends Application {
         // als de seconden <= 0
         if (seconds <= 0) {
             // de frameanimatie wordt gestopt
-            seconds = 3;
+            seconds = Integer.parseInt(instellingen.getSeconden());
             time.stop();
             label1.setText("Countdown is op 0 nu");
             next_timer(vraaglijst);
