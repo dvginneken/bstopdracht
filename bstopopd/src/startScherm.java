@@ -50,7 +50,7 @@ public class startScherm extends Application {
         styleButton1(genereer);
         styleButton2(quit);
 
-        Scene main = new Scene(mainPane, 1000,600);
+        Scene main = new Scene(mainPane, 1200,800);
         primaryStage.setScene(main);
         primaryStage.show();
     }
@@ -59,8 +59,8 @@ public class startScherm extends Application {
 
 
     private BorderPane stylemainPane(BorderPane mainPane){
-        mainPane.prefHeight(600);
-        mainPane.prefWidth(1000);
+        mainPane.prefHeight(800);
+        mainPane.prefWidth(1100);
         mainPane.setStyle("-fx-background-color: #9ff9a5;");
         return mainPane;
     }

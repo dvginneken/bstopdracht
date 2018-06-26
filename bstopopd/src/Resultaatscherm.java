@@ -60,15 +60,16 @@ public class Resultaatscherm extends Application {
         buttonsbox.setAlignment(Pos.CENTER);
         styleButton1(naar_beginscherm);
         styleButton2(afsluiten);
+        afsluiten.setOnAction(event -> {close(primaryStage);});
 
-        Scene main = new Scene(mainPane, 1000,600);
+        Scene main = new Scene(mainPane, 1200,800);
         primaryStage.setScene(main);
         primaryStage.show();
     }
 
     private BorderPane stylemainPane(BorderPane mainPane){
-        mainPane.prefHeight(600);
-        mainPane.prefWidth(1000);
+        mainPane.prefHeight(800);
+        mainPane.prefWidth(1100);
         mainPane.setStyle("-fx-background-color: #9ff9a5;");
         return mainPane;
     }
