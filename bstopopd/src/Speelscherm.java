@@ -99,16 +99,18 @@ public class Speelscherm extends Application {
         mainmain.setMargin(Questiontypes,new Insets(10,10,0,10));
         mainbox.setMargin(buttonscontrol,new Insets(50,50,30,50));
         styleTypeboxes(Questiontypes);
-        styleButton1(vorige);
+        styleButton4(vorige);
         styleButton1(volgende);
         styleButton2(naar_beginscherm);
         buttonboxstyler();
         buttonsbox.setHgrow(buttons ,Priority.ALWAYS);
         buttonsbox.setHgrow(root ,Priority.ALWAYS);
+        buttons.setAlignment(Pos.CENTER);
         root.setAutoSizeChildren(true);
         opening.setPadding(new Insets(20,20,20,20));
         vraag_label.setWrapText(true);
         opening.setFont(Font.font("open-sans", 25));
+        this.vraag_plaatje.setAlignment(Pos.CENTER);
 
         this.naar_beginscherm.setOnAction(event -> {
             startscherm.start(primaryStage);
@@ -131,6 +133,9 @@ public class Speelscherm extends Application {
                 this.volgende.setOnAction(event -> {
                     try {
                         try {
+                            if(index+1 == vraaglijst.length-1){
+                                this.volgende.setText("Inleveren");
+                            }
                             RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                             vraagtoggle.setSelected(false);
                             String texttoggle = vraagtoggle.getText();
@@ -149,7 +154,6 @@ public class Speelscherm extends Application {
                             }
                         } catch (NullPointerException e) {
                             correctbool[index] = false;
-                            System.out.println("No answer selected");
                         }
                         next(vraaglijst);
                     } catch (ArrayIndexOutOfBoundsException e) {
@@ -163,11 +167,15 @@ public class Speelscherm extends Application {
                     try {
                         previous(vraaglijst);
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        System.out.println("Kan niet naar vorige.");
+                        System.out.println("");
                     }
                 });
             }
         }else {
+            this.volgende.setManaged(false);
+            this.vorige.setManaged(false);
+            this.vorige.setVisible(false);
+            this.volgende.setVisible(false);
             //De groep bepalen
             // Een Vbox maken om de 2 labels onder elkaar te zetten
             VBox layout = new VBox(5);
@@ -195,7 +203,7 @@ public class Speelscherm extends Application {
         }
         //eindbox.getChildren().addAll(knoppen, vraag_label, buttons);
 
-        Scene main = new Scene(mainPane, 1000,600);
+        Scene main = new Scene(mainPane, 1200,800);
         primaryStage.setScene(main);
         primaryStage.show();
         primaryStage.setTitle("Optiescherm");
@@ -241,8 +249,8 @@ public class Speelscherm extends Application {
     }
 
     private BorderPane stylemainPane(BorderPane mainPane){
-        mainPane.prefHeight(600);
-        mainPane.prefWidth(1000);
+        mainPane.prefHeight(800);
+        mainPane.prefWidth(1100);
         mainPane.setStyle("-fx-background-color: #9ff9a5;");
         return mainPane;
     }
@@ -279,7 +287,7 @@ public class Speelscherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -293,7 +301,7 @@ public class Speelscherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -358,6 +366,22 @@ public class Speelscherm extends Application {
         return button;
     }
 
+    private Button styleButton4(Button button){
+        button.setPadding(new Insets(8,16,8,16));
+        button.setStyle("-fx-background-color: #dedede; ");
+        button.setTextFill(Color.WHITE);
+        blur(button);
+        button.setOnMouseEntered(event -> {
+            button.setStyle("-fx-background-color: #dedede;");
+            button.setCursor(Cursor.DEFAULT);
+        });
+        button.setOnMouseExited(event -> {
+            button.setStyle("-fx-background-color: #dedede; ");
+            button.setCursor(Cursor.DEFAULT);
+        });
+        return button;
+    }
+
     private HBox styleTypeboxes(HBox box){
         box.setPrefWidth(250);
         box.setAlignment(Pos.CENTER);
@@ -400,16 +424,12 @@ public class Speelscherm extends Application {
         // Wijzig de text van label1
         label1.setText("Countdown: "+seconds.toString());
         seconds--;
-        System.out.println("iets");
         // als de seconden <= 0
         if (seconds < 0) {
             // de frameanimatie wordt gestopt
             seconds = Integer.parseInt(instellingen.getSeconden().trim());
             time.stop();
-            System.out.println(index+2);
-            System.out.println(instellingen.getHoeveelheid());
             try{
-                System.out.println("dit was niet de laatste vraag");
                 try {
                     RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                     vraagtoggle.setSelected(false);
@@ -433,9 +453,6 @@ public class Speelscherm extends Application {
                 }
                 next_timer(vraaglijst);
             }catch (ArrayIndexOutOfBoundsException e){
-                System.out.println(correctbool[29]);
-                System.out.println(score(correctbool));
-                System.out.println(this.primaryStage);
                 resultaatscherm.score = Integer.toString(score(correctbool));
                 resultaatscherm.start(this.primaryStage);
             }
@@ -445,9 +462,9 @@ public class Speelscherm extends Application {
 
     private void update(vraag vraag){
         try {
-            System.out.println("naar structuur_vraag functie");
+            //System.out.println("naar structuur_vraag functie");
             this.vraag_plaatje = structuur_vraag(vraag);
-        }catch (IOException e){System.out.println("niet naar structuur_vraag functie");}
+        }catch (IOException e){}
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         try {
@@ -491,7 +508,7 @@ public class Speelscherm extends Application {
                 this.vraag_plaatje.getChildren().add(imageView);
 
             }catch (IOException e){
-                System.out.println("IOEXEPTION");
+                System.out.println("");
             }
         }else {
         }
@@ -526,7 +543,7 @@ public class Speelscherm extends Application {
                     buttons.getChildren().add(buttoncombi);
                     ind++;
                 }catch (IOException e){
-                    System.out.println("IOEXEPTION");
+                    System.out.println("");
                 }
             }else {
                 RadioButton optiebutton = new RadioButton(optie + "\n");
@@ -539,6 +556,7 @@ public class Speelscherm extends Application {
         return buttons;
     }
     private void next(vraag[] vraaglijst){
+        styleButton1(this.vorige);
         this.index += 1;
         update(vraaglijst[this.index]);
     }
@@ -557,7 +575,7 @@ public class Speelscherm extends Application {
 
     private void previous(vraag[] vraaglijst){
         if (index == 0){
-
+            styleButton4(this.vorige);
         }
         else {
             index -= 1;

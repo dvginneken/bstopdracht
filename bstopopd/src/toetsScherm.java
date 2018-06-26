@@ -110,7 +110,7 @@ public class toetsScherm extends Application {
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
 
                 RadioButton chk = (RadioButton)t1.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-                System.out.println("Selected Radio Button - "+chk.getText());
+                //System.out.println("Selected Radio Button - "+chk.getText());
 
             }
         });
@@ -126,7 +126,7 @@ public class toetsScherm extends Application {
                     while (scanner.hasNext()){
                         String line = scanner.nextLine();
                         this.namelist.add(line.split(" ")[0]);
-                        System.out.println(this.namelist.get(i));
+                        //System.out.println(this.namelist.get(i));
                         if (i <= 9){
                             previewString = previewString + line+ "\n";
                         }
@@ -134,7 +134,7 @@ public class toetsScherm extends Application {
                     }
                 }
                 catch (FileNotFoundException e){
-                    System.out.println(e);
+                    //System.out.println(e);
                 }
                 this.previewLabel.setText(previewString);
             }
@@ -144,14 +144,14 @@ public class toetsScherm extends Application {
             this.progress.setText("Bestanden aanmaken...");
             RadioButton chk = (RadioButton)group.getSelectedToggle();
             if (!chk.getText().trim().isEmpty()){
-                System.out.println((chk.getText().trim()));
+                //System.out.println((chk.getText().trim()));
                 Integer optie = Integer.parseInt(chk.getText().trim());
                 vraag[] vraaglijst = new vraag[optie];
                 try{
                     writeFile(vraaglijst, optie);
                 }
                 catch (IOException e){
-                    System.out.println(e);
+                    //System.out.println(e);
                 }
             }
             if (!this.namelist.isEmpty()) {
@@ -199,7 +199,7 @@ public class toetsScherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -213,7 +213,7 @@ public class toetsScherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -328,7 +328,7 @@ public class toetsScherm extends Application {
             }
         }
         else {
-            System.out.println("this.namelist = null line 167 toetsscherm.java");
+            //System.out.println("this.namelist = null line 167 toetsscherm.java");
         }
     }
 
@@ -340,7 +340,7 @@ public class toetsScherm extends Application {
             clear.close();
         }
         catch (IOException e){
-            System.out.println(e + "clearfile() Toetscherm.java");
+            //System.out.println(e + "clearfile() Toetscherm.java");
         }
     }
 

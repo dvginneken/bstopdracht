@@ -92,7 +92,7 @@ public class Resultaatscherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -106,7 +106,7 @@ public class Resultaatscherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }

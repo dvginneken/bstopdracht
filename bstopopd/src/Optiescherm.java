@@ -213,7 +213,7 @@ public class Optiescherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -227,7 +227,7 @@ public class Optiescherm extends Application {
             blurredbox.setEffect(dropShadow);
         }
         catch (Exception e){
-            System.out.println("cannot apply blur to object.");
+            //System.out.println("cannot apply blur to object.");
         }
         return blurredbox;
     }
@@ -303,7 +303,6 @@ public class Optiescherm extends Application {
                 value = true;
             }
         }
-        System.out.println(value + "valuedd");
         return value;
     }
 
@@ -332,7 +331,7 @@ public class Optiescherm extends Application {
                     inst.setSoort_antwoorden(chk_sa);
                     RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
                     String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur"};
-                    System.out.println(ianynotnlist(chk_sv.toArray(new String[chk_sv.size()]), list));
+                    //System.out.println(ianynotnlist(chk_sv.toArray(new String[chk_sv.size()]), list));
                     if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv))){
                         setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
                     }else if((chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list) ||

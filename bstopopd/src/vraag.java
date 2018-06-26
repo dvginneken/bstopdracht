@@ -245,7 +245,7 @@ public class vraag {
                 this.hoeveelaminozuur = i;
             }
         } catch (FileNotFoundException e) {
-            System.out.println(e);
+            //System.out.println(e);
         }
         return aminozuurlist;
     }
