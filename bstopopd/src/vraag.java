@@ -26,7 +26,6 @@ public class vraag {
     private String typeanswer = "r";
     private String typequestion = "r";
 
-
     /**
      * constructor vraag
      * klasse kan worden aangemaakt zonder opties mee te geven.
