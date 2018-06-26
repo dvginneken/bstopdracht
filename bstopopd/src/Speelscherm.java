@@ -400,6 +400,7 @@ public class Speelscherm extends Application {
         // Wijzig de text van label1
         label1.setText("Countdown: "+seconds.toString());
         seconds--;
+        System.out.println("iets");
         // als de seconden <= 0
         if (seconds < 0) {
             // de frameanimatie wordt gestopt
