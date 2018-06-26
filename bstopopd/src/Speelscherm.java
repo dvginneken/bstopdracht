@@ -60,7 +60,7 @@ public class Speelscherm extends Application {
     public Speelscherm(Instellingen instellingen) {
         this.instellingen = instellingen;
         startTime = Integer.parseInt(instellingen.getSeconden().trim());
-        seconds = startTime + 1;
+        seconds = startTime;
         this.opening = new Label("Welkom " + this.instellingen.getNaam()+"!");
         correctbool = new Boolean[this.instellingen.getHoeveelheid()];
         resultaatscherm = new Resultaatscherm(instellingen, getScore());
@@ -397,15 +397,15 @@ public class Speelscherm extends Application {
 
     private void newmethod(Timeline time, vraag vraag, vraag[] vraaglijst){
         // 1 van het aantal seconden afhalen
-        seconds--;
         // Wijzig de text van label1
         label1.setText("Countdown: "+seconds.toString());
+        seconds--;
+        System.out.println("iets");
         // als de seconden <= 0
-        if (seconds <= 0) {
+        if (seconds < 0) {
             // de frameanimatie wordt gestopt
             seconds = Integer.parseInt(instellingen.getSeconden().trim());
             time.stop();
-            label1.setText("Countdown is op 0 nu");
             System.out.println(index+2);
             System.out.println(instellingen.getHoeveelheid());
             try{
