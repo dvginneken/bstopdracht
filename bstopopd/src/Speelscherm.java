@@ -204,7 +204,6 @@ public class Speelscherm extends Application {
     public Integer score(Boolean[] boolist){
         Integer score = 0;
         for (Boolean bool : boolist){
-            //System.out.println(bool);
             if (bool.equals(true)){
                 score += 1;
             }
@@ -400,16 +399,12 @@ public class Speelscherm extends Application {
         // Wijzig de text van label1
         label1.setText("Countdown: "+seconds.toString());
         seconds--;
-        System.out.println("iets");
         // als de seconden <= 0
         if (seconds < 0) {
             // de frameanimatie wordt gestopt
             seconds = Integer.parseInt(instellingen.getSeconden().trim());
             time.stop();
-            System.out.println(index+2);
-            System.out.println(instellingen.getHoeveelheid());
             try{
-                System.out.println("dit was niet de laatste vraag");
                 try {
                     RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                     vraagtoggle.setSelected(false);
@@ -429,13 +424,9 @@ public class Speelscherm extends Application {
                     }
                 } catch (NullPointerException e) {
                     correctbool[index] = false;
-                    //System.out.println("No answer selected");
                 }
                 next_timer(vraaglijst);
             }catch (ArrayIndexOutOfBoundsException e){
-                System.out.println(correctbool[29]);
-                System.out.println(score(correctbool));
-                System.out.println(this.primaryStage);
                 resultaatscherm.score = Integer.toString(score(correctbool));
                 resultaatscherm.start(this.primaryStage);
             }
@@ -445,9 +436,8 @@ public class Speelscherm extends Application {
 
     private void update(vraag vraag){
         try {
-            System.out.println("naar structuur_vraag functie");
             this.vraag_plaatje = structuur_vraag(vraag);
-        }catch (IOException e){System.out.println("niet naar structuur_vraag functie");}
+        }catch (IOException e){}
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         try {
@@ -521,7 +511,6 @@ public class Speelscherm extends Application {
                     optiebutton.setToggleGroup(optiegroep);
                     HBox buttoncombi = new HBox(10);
                     stylerb(optiebutton);
-                    //System.out.println(optiegroep);
                     buttoncombi.getChildren().addAll(optiebutton, root);
                     buttons.getChildren().add(buttoncombi);
                     ind++;
