@@ -32,6 +32,8 @@ public class Main extends Application {
                             speelscherm.naar_beginscherm.setOnAction(event -> {
                                 startscherm.start(primaryStage);
                             });
+                            Resultaatscherm resultscreen = speelscherm.returnresultaatscherm();
+                            resultscreen.naar_beginscherm.setOnAction(event -> startscherm.start(primaryStage));
                         }catch (NullPointerException f){
                             System.out.println("error");
                         }
