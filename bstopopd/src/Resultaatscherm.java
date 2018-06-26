@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 
 public class Resultaatscherm extends Application {
     Instellingen instellingen;
-    startScherm startscherm = new startScherm();
+    startScherm startscherm;
+    Speelscherm speelscherm;
     Button naar_beginscherm = new Button("Naar beginscherm");
     Button afsluiten = new Button("Afsluiten");
 
@@ -28,7 +29,7 @@ public class Resultaatscherm extends Application {
         Text opening = new Text("Hoi " + this.instellingen.getNaam());
         opening.setFont(Font.font("open-sans", 25));
 
-        Text resultaat = new Text("aantal goede" + "/" + this.instellingen.getHoeveelheid());
+        Text resultaat = new Text(speelscherm.score() + "/" + this.instellingen.getHoeveelheid());
         resultaat.setFont(Font.font("open-sans", 32));
 
         this.naar_beginscherm.setOnAction(event -> {

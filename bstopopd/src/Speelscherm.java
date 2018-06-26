@@ -49,6 +49,7 @@ public class Speelscherm extends Application {
     final ToggleGroup optiegroep = new ToggleGroup();
     Boolean[] correctbool;
     Stage primaryStage;
+    String score;
 
     public static void main(String[] args) {
         launch(args);
@@ -177,7 +178,7 @@ public class Speelscherm extends Application {
         primaryStage.setTitle("Optiescherm");
     }
 
-    private Integer score(Boolean[] boolist){
+    public Integer score(Boolean[] boolist){
         Integer score = 0;
         for (Boolean bool : boolist){
             //System.out.println(bool);
@@ -385,8 +386,7 @@ public class Speelscherm extends Application {
             if(this.index <= instellingen.getHoeveelheid()){
                 next_timer(vraaglijst);
             }else{
-                Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
-                resultaatscherm.start(primaryStage);
+
             }
         }
 
@@ -477,7 +477,7 @@ public class Speelscherm extends Application {
                 correctbool[index] = false;
                 System.out.println("No answer selected");
             }
-            System.out.println(score(correctbool));
+            score = Integer.toString(score(correctbool));
         }
         else {
             try {
@@ -513,6 +513,8 @@ public class Speelscherm extends Application {
         return hbox;
     }
 
+    public String getScore(){return score;}
+
     private void next_timer(vraag[] vraaglijst){
         if (index == vraaglijst.length-1){
             try {
@@ -535,7 +537,9 @@ public class Speelscherm extends Application {
             } catch (NullPointerException e) {
                 correctbool[index] = false;
             }
-            System.out.println(score(correctbool));
+            score = Integer.toString(score(correctbool));
+            Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
+            resultaatscherm.start(primaryStage);
         }
         else {
             try {
