@@ -27,7 +27,6 @@ public class vraag {
     private String typequestion = "r";
     public String volledige_naam;
 
-
     /**
      * constructor vraag
      * klasse kan worden aangemaakt zonder opties mee te geven.
@@ -73,7 +72,7 @@ public class vraag {
         Integer RND2 = new Random().nextInt(size2);
         String temp = typequestion.get(RND1);
         String temp2 = typeanswer.get(RND2);
-        String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur", "Structuur"};
+        String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur"};
         Boolean go = false;
         while (go.equals(false)) {
             if (temp.trim().equals(temp2) ||

@@ -51,6 +51,7 @@ public class Speelscherm extends Application {
     Boolean[] correctbool;
     Stage primaryStage;
     String score;
+    Resultaatscherm resultaatscherm;
 
     public static void main(String[] args) {
         launch(args);
@@ -62,6 +63,7 @@ public class Speelscherm extends Application {
         seconds = startTime + 1;
         this.opening = new Label("Welkom " + this.instellingen.getNaam()+"!");
         correctbool = new Boolean[this.instellingen.getHoeveelheid()];
+        resultaatscherm = new Resultaatscherm(instellingen, getScore());
     }
 
     @Override
@@ -151,7 +153,8 @@ public class Speelscherm extends Application {
                         next(vraaglijst);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         score = Integer.toString(score(correctbool));
-                        Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen, getScore());
+                        //resultaatscherm = new Resultaatscherm(instellingen, getScore());
+                        resultaatscherm.score = getScore();
                         resultaatscherm.start(primaryStage);
                     }
                 });
@@ -586,5 +589,9 @@ public class Speelscherm extends Application {
             index -= 1;
             update(vraaglijst[index]);
         }
+    }
+
+    public Resultaatscherm returnresultaatscherm(){
+        return resultaatscherm;
     }
 }
