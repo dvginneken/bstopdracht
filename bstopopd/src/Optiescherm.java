@@ -295,6 +295,18 @@ public class Optiescherm extends Application {
         return value;
     }
 
+    private Boolean ianynotnlist(String[] string, String[] stringlist) {
+        Boolean value = false;
+        for (String item : string) {
+            List<String> listarray = Arrays.asList(stringlist);
+            if (!listarray.contains(item)){
+                value = true;
+            }
+        }
+        System.out.println(value + "valuedd");
+        return value;
+    }
+
     public Instellingen returinst(){
         if ((tekst.getText() != null && ! tekst.getText().isEmpty())){
             inst.setNaam(tekst.getText());
@@ -319,11 +331,16 @@ public class Optiescherm extends Application {
                 if ((chk_sa != null)){
                     inst.setSoort_antwoorden(chk_sa);
                     RadioButton chk_tijd = (RadioButton)toggletijd.getSelectedToggle();
-                    String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur", "Structuur"};
-                    if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv)) ||
-                            (chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list))){
+                    String[] list = new String[]{"Hydrofobiciteit", "Lading", "Grootte", "3D-voorkeur"};
+                    System.out.println(ianynotnlist(chk_sv.toArray(new String[chk_sv.size()]), list));
+                    if ((chk_sa.size() == 1 && chk_sv.size() == 1 && chk_sa.equals(chk_sv))){
                         setLabelevent("Je antwoord en vraag kunnen niet van dezelfde soort zijn.");
-                    }else
+                    }else if((chk_sa.size() == 1 && chk_sv.size() == 1 && inlist(new String[]{chk_sa.get(0), chk_sv.get(0)} ,list) ||
+                            (ianynotnlist(chk_sv.toArray(new String[chk_sv.size()]), list).equals(false) &&
+                                    ianynotnlist(chk_sa.toArray(new String[chk_sa.size()]), list).equals(false)))){
+                        setLabelevent("Kies een optie anders dan Hydrofobiciteit, Lading, Grootte, 3D-voorkeur.");
+                    }
+                    else
                     if ((chk_tijd != null)){
                         String tijdkeuze = chk_tijd.getText();
                         inst.setTijd(tijdkeuze);
