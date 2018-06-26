@@ -348,6 +348,7 @@ public class vraag {
                 Collections.shuffle(strList);
                 this.opties = strList.toArray(new String[strList.size()]);
             } else if (this.typeanswer.trim().equals("Structuur")) {
+                this.setAntwoord(aminozuur.getNaam());
                 amminozuur acid2 = getRNDAcidNot(aminozuur.getNaam());
                 amminozuur acid3 = getRNDAcidNot(aminozuur.getNaam());
                 amminozuur acid4 = getRNDAcidNot(aminozuur.getNaam());

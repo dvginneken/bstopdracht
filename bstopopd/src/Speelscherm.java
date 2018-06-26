@@ -428,12 +428,14 @@ public class Speelscherm extends Application {
                     imageView.setFitHeight(100);
                     imageView.setFitWidth(150);
                     Group root = new Group(imageView);
-                    RadioButton optiebutton = new RadioButton("");
+                    RadioButton optiebutton = new RadioButton((Integer.toString(ind+1)));
                     optiebutton.setToggleGroup(optiegroep);
                     HBox buttoncombi = new HBox(10);
                     stylerb(optiebutton);
+                    //System.out.println(optiegroep);
                     buttoncombi.getChildren().addAll(optiebutton, root);
                     buttons.getChildren().add(buttoncombi);
+                    ind++;
                 }catch (IOException e){
                     System.out.println("IOEXEPTION");
                 }
@@ -448,12 +450,20 @@ public class Speelscherm extends Application {
         return buttons;
     }
     private void next(vraag[] vraaglijst){
+        System.out.println(optiegroep);
         if (index == vraaglijst.length-1){
             try {
                 RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                 vraagtoggle.setSelected(false);
                 String texttoggle = vraagtoggle.getText();
-                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                        correctbool[index] = true;
+                    }
+                    else {
+                        correctbool[index] = false;
+                    }
+                }
                 if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
                     correctbool[index] = true;
                 } else {
@@ -470,11 +480,20 @@ public class Speelscherm extends Application {
                 RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                 vraagtoggle.setSelected(false);
                 String texttoggle = vraagtoggle.getText();
-                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
-                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
-                    correctbool[index] = true;
-                } else {
-                    correctbool[index] = false;
+                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                        correctbool[index] = true;
+                    }
+                    else {
+                        correctbool[index] = false;
+                    }
+                }
+                else {
+                    if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                        correctbool[index] = true;
+                    } else {
+                        correctbool[index] = false;
+                    }
                 }
             } catch (NullPointerException e) {
                 correctbool[index] = false;
@@ -497,7 +516,15 @@ public class Speelscherm extends Application {
                 RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                 vraagtoggle.setSelected(false);
                 String texttoggle = vraagtoggle.getText();
-                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                //System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                        correctbool[index] = true;
+                    }
+                    else {
+                        correctbool[index] = false;
+                    }
+                }
                 if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
                     correctbool[index] = true;
                 } else {
@@ -505,7 +532,7 @@ public class Speelscherm extends Application {
                 }
             } catch (NullPointerException e) {
                 correctbool[index] = false;
-                System.out.println("No answer selected");
+                //System.out.println("No answer selected");
             }
             System.out.println(score(correctbool));
         }
@@ -514,7 +541,15 @@ public class Speelscherm extends Application {
                 RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
                 vraagtoggle.setSelected(false);
                 String texttoggle = vraagtoggle.getText();
-                System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                //System.out.println(Boolean.toString(vraaglijst[index].getAntwoord().equals(texttoggle.trim()))+ index);
+                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                        correctbool[index] = true;
+                    }
+                    else {
+                        correctbool[index] = false;
+                    }
+                }
                 if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
                     correctbool[index] = true;
                 } else {
@@ -522,7 +557,7 @@ public class Speelscherm extends Application {
                 }
             } catch (NullPointerException e) {
                 correctbool[index] = false;
-                System.out.println("No answer selected");
+                //System.out.println("No answer selected");
             }
             this.index += 1;
             update_timer(vraaglijst[this.index], vraaglijst);
@@ -530,8 +565,13 @@ public class Speelscherm extends Application {
     }
 
     private void previous(vraag[] vraaglijst){
-        index -= 1;
-        update(vraaglijst[index]);
+        if (index == 0){
+
+        }
+        else {
+            index -= 1;
+            update(vraaglijst[index]);
+        }
     }
 }
         /*Pane pane = new Pane();
