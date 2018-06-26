@@ -39,6 +39,7 @@ public class Speelscherm extends Application {
     Button starten = new Button("Spel starten");
     Label vraag_label = new Label("");
     Label opening;
+    HBox vraag_plaatje = new HBox();
     HBox buttons =  new HBox(20);
     int index = 0;
     Integer startTime;
@@ -58,7 +59,7 @@ public class Speelscherm extends Application {
     public Speelscherm(Instellingen instellingen) {
         this.instellingen = instellingen;
         startTime = Integer.parseInt(instellingen.getSeconden().trim());
-        seconds = startTime;
+        seconds = startTime + 1;
         this.opening = new Label("Welkom " + this.instellingen.getNaam()+"!");
         correctbool = new Boolean[this.instellingen.getHoeveelheid()];
     }
@@ -81,7 +82,7 @@ public class Speelscherm extends Application {
         startmain.getChildren().addAll(opening, starten);
         buttonsbox.getChildren().addAll(buttons);
         buttonscontrol.getChildren().addAll(vorige, volgende, naar_beginscherm);
-        mainmain.getChildren().addAll(Questiontypes ,opties, buttonsbox, countdowntimer, buttonscontrol);
+        mainmain.getChildren().addAll(Questiontypes , this.vraag_plaatje, opties, buttonsbox, countdowntimer, buttonscontrol);
         Questiontypes.getChildren().addAll(vraag_label);
         mainbox.getChildren().addAll(stackmain, startmain, mainmain);
 
@@ -174,13 +175,9 @@ public class Speelscherm extends Application {
             label1.setFont(Font.font(20));
 
 
-            //label1 wordt aan de layout toegevoegd
             layout.getChildren().add(label1);
-            // De layout krijgt een afstand van 40 pixels naar rechts
             layout.setLayoutX(40);
-            // Voeg de layout aan de groep
             root.getChildren().add(layout);
-            // Ga naar de methode doTime
             for (Integer i = 0; i < instellingen.getHoeveelheid(); i++) {
                 vraaglijst[i] = new vraag(sv, sa);
                 vraaglijst[i].generatequestions();}
@@ -405,19 +402,75 @@ public class Speelscherm extends Application {
             seconds = Integer.parseInt(instellingen.getSeconden().trim());
             time.stop();
             label1.setText("Countdown is op 0 nu");
-            if(this.index <= instellingen.getHoeveelheid()){
-                //score update
+            System.out.println(index+2);
+            System.out.println(instellingen.getHoeveelheid());
+            if((index+2) < instellingen.getHoeveelheid()){
+                System.out.println("dit was niet de laatste vraag");
+                try {
+                    RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                    vraagtoggle.setSelected(false);
+                    String texttoggle = vraagtoggle.getText();
+                    if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                        if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                            correctbool[index] = true;
+                        }
+                        else {
+                            correctbool[index] = false;
+                        }
+                    }
+                    if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                        correctbool[index] = true;
+                    } else {
+                        correctbool[index] = false;
+                    }
+                } catch (NullPointerException e) {
+                    correctbool[index] = false;
+                    //System.out.println("No answer selected");
+                }
                 next_timer(vraaglijst);
-            }else{
-                //score berekenen
-                Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen, getScore());
-                resultaatscherm.start(primaryStage);
+            }
+            else if ((index+2) == instellingen.getHoeveelheid()){
+                System.out.println("dit is de laatste vraag");
+                try {
+                    RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                    vraagtoggle.setSelected(false);
+                    String texttoggle = vraagtoggle.getText();
+                    if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                        if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                            correctbool[index] = true;
+                        }
+                        else {
+                            correctbool[index] = false;
+                        }
+                    }
+                    if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                        correctbool[index] = true;
+                    } else {
+                        correctbool[index] = false;
+                    }
+                    int teller = 0;
+                    for(boolean x:correctbool){
+                        teller++;
+                        System.out.println("teller: " + teller);
+                        System.out.println(x);
+                    }
+                    score = Integer.toString(score(correctbool));
+                    Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen, getScore());
+                    resultaatscherm.start(primaryStage);
+                } catch (NullPointerException e) {
+                    correctbool[index] = false;
+                    //System.out.println("No answer selected");
+                }
             }
         }
 
     }
 
     private void update(vraag vraag){
+        try {
+            System.out.println("naar structuur_vraag functie");
+            this.vraag_plaatje = structuur_vraag(vraag);
+        }catch (IOException e){System.out.println("niet naar structuur_vraag functie");}
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         try {
@@ -428,6 +481,9 @@ public class Speelscherm extends Application {
     }
 
     private void update_timer(vraag vraag, vraag[] vraaglijst){
+        try {
+            this.vraag_plaatje = structuur_vraag(vraag);
+        }catch (IOException e){}
         vraag_label.setText("Vraag " + (index + 1) + ": " + vraag.getVraag());
         buttons.getChildren().clear();
         try {
@@ -436,6 +492,33 @@ public class Speelscherm extends Application {
 
         }
         doTime(vraag, vraaglijst);
+    }
+
+    private HBox structuur_vraag(vraag vraag) throws IOException{
+        this.vraag_plaatje.getChildren().clear();
+        if (vraag.getTypequestion().equals("Structuur")){
+            try{
+                String pathway = "C:/Users/julian/IdeaProjects/bstopdracht3/bstopopd/src/";
+                File file = new File("").getAbsoluteFile();
+                if (System.getProperty("os.name").split("")[0] == "Windows" ){
+                    pathway = (file+"\\bstopopd\\src\\pictures");
+                }
+                else{
+                    pathway = (file+"/bstopopd/src/pictures");
+                };
+                FileInputStream inputstream = new FileInputStream(pathway +"/"+ vraag.getVolledige_naam() +".png");
+                Image image = new Image(inputstream);
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(100);
+                imageView.setFitWidth(150);
+                this.vraag_plaatje.getChildren().add(imageView);
+
+            }catch (IOException e){
+                System.out.println("IOEXEPTION");
+            }
+        }else {
+        }
+        return this.vraag_plaatje;
     }
 
     private HBox buttonbox(vraag vraag) throws IOException {
@@ -491,35 +574,8 @@ public class Speelscherm extends Application {
     public String getScore(){return score;}
 
     private void next_timer(vraag[] vraaglijst){
-        if (index == vraaglijst.length-1){
-            score = Integer.toString(score(correctbool));
-
-        }
-        else {
-            try {
-                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
-                vraagtoggle.setSelected(false);
-                String texttoggle = vraagtoggle.getText();
-                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
-                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
-                        correctbool[index] = true;
-                    }
-                    else {
-                        correctbool[index] = false;
-                    }
-                }
-                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
-                    correctbool[index] = true;
-                } else {
-                    correctbool[index] = false;
-                }
-            } catch (NullPointerException e) {
-                correctbool[index] = false;
-                //System.out.println("No answer selected");
-            }
-            this.index += 1;
-            update_timer(vraaglijst[this.index], vraaglijst);
-        }
+        this.index += 1;
+        update_timer(vraaglijst[this.index], vraaglijst);
     }
 
     private void previous(vraag[] vraaglijst){

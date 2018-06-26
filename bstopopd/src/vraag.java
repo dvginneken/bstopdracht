@@ -25,6 +25,7 @@ public class vraag {
     private Integer hoeveelaminozuur;
     private String typeanswer = "r";
     private String typequestion = "r";
+    public String volledige_naam;
 
 
     /**
@@ -197,6 +198,7 @@ public class vraag {
         this.typeanswer = typeanswer;
     }
 
+    public String getVolledige_naam(){return this.volledige_naam;}
 
     /**
      * Hier kan je het type vraag opvragen.
@@ -366,6 +368,7 @@ public class vraag {
                 this.opties = new String[]{"null", "null", "null"};
             }
         }
+        this.volledige_naam = aminozuur.getNaam();
     }
 
 
