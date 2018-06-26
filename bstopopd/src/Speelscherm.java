@@ -114,6 +114,7 @@ public class Speelscherm extends Application {
             startscherm.start(primaryStage);
         });
 
+        this.primaryStage = primaryStage;
 
         List<String> sv = this.instellingen.getSoort_vragen();
         List<String> sa = this.instellingen.getSoort_antwoorden();
@@ -406,7 +407,7 @@ public class Speelscherm extends Application {
             time.stop();
             System.out.println(index+2);
             System.out.println(instellingen.getHoeveelheid());
-            if((index+2) < instellingen.getHoeveelheid()){
+            try{
                 System.out.println("dit was niet de laatste vraag");
                 try {
                     RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
@@ -430,39 +431,12 @@ public class Speelscherm extends Application {
                     //System.out.println("No answer selected");
                 }
                 next_timer(vraaglijst);
-            }
-            else if ((index+2) == instellingen.getHoeveelheid()){
-                System.out.println("dit is de laatste vraag");
-                try {
-                    RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
-                    vraagtoggle.setSelected(false);
-                    String texttoggle = vraagtoggle.getText();
-                    if (vraaglijst[index].getTypeanswer().equals("Structuur")){
-                        if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
-                            correctbool[index] = true;
-                        }
-                        else {
-                            correctbool[index] = false;
-                        }
-                    }
-                    if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
-                        correctbool[index] = true;
-                    } else {
-                        correctbool[index] = false;
-                    }
-                    int teller = 0;
-                    for(boolean x:correctbool){
-                        teller++;
-                        System.out.println("teller: " + teller);
-                        System.out.println(x);
-                    }
-                    score = Integer.toString(score(correctbool));
-                    Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen, getScore());
-                    resultaatscherm.start(primaryStage);
-                } catch (NullPointerException e) {
-                    correctbool[index] = false;
-                    //System.out.println("No answer selected");
-                }
+            }catch (ArrayIndexOutOfBoundsException e){
+                System.out.println(correctbool[29]);
+                System.out.println(score(correctbool));
+                System.out.println(this.primaryStage);
+                resultaatscherm.score = Integer.toString(score(correctbool));
+                resultaatscherm.start(this.primaryStage);
             }
         }
 

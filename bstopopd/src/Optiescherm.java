@@ -127,7 +127,7 @@ public class Optiescherm extends Application {
         }*/
         /**Dit stukje maakt radiobuttons om de hoeveelheid seconden te kiezen. De zichtbaarheid staat op false omdat hij
          // pas zichtbaar wordt als bij tijd "ja"is aangeklikt */
-        String[] tijden = {"5", "10", "15", "20"};
+        String[] tijden = {"1", "5", "10", "15", "20"};
 
         for (String tijd : tijden){
             RadioButton rb4 = new RadioButton(tijd+"\n");
