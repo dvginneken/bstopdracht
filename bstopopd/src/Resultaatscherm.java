@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class Resultaatscherm extends Application {
     Instellingen instellingen;
     startScherm startscherm;
-    Speelscherm speelscherm;
+    String score;
     Button naar_beginscherm = new Button("Naar beginscherm");
     Button afsluiten = new Button("Afsluiten");
 
@@ -21,7 +21,10 @@ public class Resultaatscherm extends Application {
         launch(args);
     }
 
-    public Resultaatscherm(Instellingen instellingen){this.instellingen = instellingen;}
+    public Resultaatscherm(Instellingen instellingen, String score){
+        this.instellingen = instellingen;
+        this.score = score;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -29,7 +32,7 @@ public class Resultaatscherm extends Application {
         Text opening = new Text("Hoi " + this.instellingen.getNaam());
         opening.setFont(Font.font("open-sans", 25));
 
-        Text resultaat = new Text(speelscherm.score() + "/" + this.instellingen.getHoeveelheid());
+        Text resultaat = new Text(score + "/" + this.instellingen.getHoeveelheid());
         resultaat.setFont(Font.font("open-sans", 32));
 
         this.naar_beginscherm.setOnAction(event -> {

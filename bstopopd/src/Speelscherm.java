@@ -126,9 +126,31 @@ public class Speelscherm extends Application {
                 });
                 this.volgende.setOnAction(event -> {
                     try {
+                        try {
+                            RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
+                            vraagtoggle.setSelected(false);
+                            String texttoggle = vraagtoggle.getText();
+                            if (vraaglijst[index].getTypeanswer().equals("Structuur")){
+                                if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
+                                    correctbool[index] = true;
+                                }
+                                else {
+                                    correctbool[index] = false;
+                                }
+                            }
+                            if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
+                                correctbool[index] = true;
+                            } else {
+                                correctbool[index] = false;
+                            }
+                        } catch (NullPointerException e) {
+                            correctbool[index] = false;
+                            System.out.println("No answer selected");
+                        }
                         next(vraaglijst);
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
+                        score = Integer.toString(score(correctbool));
+                        Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen, getScore());
                         resultaatscherm.start(primaryStage);
                     }
                 });
@@ -384,9 +406,12 @@ public class Speelscherm extends Application {
             time.stop();
             label1.setText("Countdown is op 0 nu");
             if(this.index <= instellingen.getHoeveelheid()){
+                //score update
                 next_timer(vraaglijst);
             }else{
-
+                //score berekenen
+                Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen, getScore());
+                resultaatscherm.start(primaryStage);
             }
         }
 
@@ -454,58 +479,8 @@ public class Speelscherm extends Application {
         return buttons;
     }
     private void next(vraag[] vraaglijst){
-        System.out.println(optiegroep);
-        if (index == vraaglijst.length-1){
-            try {
-                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
-                vraagtoggle.setSelected(false);
-                String texttoggle = vraagtoggle.getText();
-                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
-                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
-                        correctbool[index] = true;
-                    }
-                    else {
-                        correctbool[index] = false;
-                    }
-                }
-                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
-                    correctbool[index] = true;
-                } else {
-                    correctbool[index] = false;
-                }
-            } catch (NullPointerException e) {
-                correctbool[index] = false;
-                System.out.println("No answer selected");
-            }
-            score = Integer.toString(score(correctbool));
-        }
-        else {
-            try {
-                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
-                vraagtoggle.setSelected(false);
-                String texttoggle = vraagtoggle.getText();
-                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
-                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
-                        correctbool[index] = true;
-                    }
-                    else {
-                        correctbool[index] = false;
-                    }
-                }
-                else {
-                    if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
-                        correctbool[index] = true;
-                    } else {
-                        correctbool[index] = false;
-                    }
-                }
-            } catch (NullPointerException e) {
-                correctbool[index] = false;
-                System.out.println("No answer selected");
-            }
-            this.index += 1;
-            update(vraaglijst[this.index]);
-        }
+        this.index += 1;
+        update(vraaglijst[this.index]);
     }
 
     private HBox center_HBox(HBox hbox){
@@ -517,29 +492,8 @@ public class Speelscherm extends Application {
 
     private void next_timer(vraag[] vraaglijst){
         if (index == vraaglijst.length-1){
-            try {
-                RadioButton vraagtoggle = (RadioButton) optiegroep.getSelectedToggle();
-                vraagtoggle.setSelected(false);
-                String texttoggle = vraagtoggle.getText();
-                if (vraaglijst[index].getTypeanswer().equals("Structuur")){
-                    if(vraaglijst[index].getAntwoord().equals(vraaglijst[index].getOpties()[Integer.parseInt(texttoggle.trim())-1])){
-                        correctbool[index] = true;
-                    }
-                    else {
-                        correctbool[index] = false;
-                    }
-                }
-                if (vraaglijst[index].getAntwoord().equals(texttoggle.trim())) {
-                    correctbool[index] = true;
-                } else {
-                    correctbool[index] = false;
-                }
-            } catch (NullPointerException e) {
-                correctbool[index] = false;
-            }
             score = Integer.toString(score(correctbool));
-            Resultaatscherm resultaatscherm = new Resultaatscherm(instellingen);
-            resultaatscherm.start(primaryStage);
+
         }
         else {
             try {
